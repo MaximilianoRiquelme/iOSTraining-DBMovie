@@ -9,8 +9,9 @@
 
 import Foundation
 
-// MARK: - Movie
-struct SingleMovie: Codable {
+// MARK: - Single Movie
+struct SingleMovie: MovieProtocol
+{
     let adult: Bool
     let backdropPath: String
     let belongsToCollection: BelongsToCollection?
@@ -67,7 +68,8 @@ struct SingleMovie: Codable {
 }
 
 // MARK: - BelongsToCollection
-struct BelongsToCollection: Codable {
+struct BelongsToCollection: Codable
+{
     let id: Int
     let name: String
     let posterPath: String
@@ -93,7 +95,8 @@ struct Genre: Codable {
 }
 
 // MARK: - ProductionCompany
-struct ProductionCompany: Codable {
+struct ProductionCompany: Codable
+{
     let id: Int
     let logoPath: String?
     let name: String
@@ -108,7 +111,8 @@ struct ProductionCompany: Codable {
 }
 
 // MARK: - ProductionCountry
-struct ProductionCountry: Codable {
+struct ProductionCountry: Codable
+{
     let iso3166_1: String
     let name: String
 
@@ -119,7 +123,8 @@ struct ProductionCountry: Codable {
 }
 
 // MARK: - SpokenLanguage
-struct SpokenLanguage: Codable {
+struct SpokenLanguage: Codable
+{
     let englishName: String
     let iso639_1: String
     let name: String

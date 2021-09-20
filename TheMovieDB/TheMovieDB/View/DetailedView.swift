@@ -11,11 +11,11 @@ class DetailedView: UIViewController
 {
     @IBOutlet var englishTitle: UILabel!
     @IBOutlet var originalTitle: UILabel!
-    @IBOutlet var posterImage: UIImageView!
+    @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet var overview: UILabel!
     
-    var detailedController: DetailedController?
+    var detailedController: DetailedControllerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +25,12 @@ class DetailedView: UIViewController
 
     func loadDetails() {
         DispatchQueue.main.async {
-            self.englishTitle.text = self.detailedController?.englishTitle
+            self.title = self.detailedController?.englishTitle
+            
             self.originalTitle.text = self.detailedController?.originalTitle
             
             if let url = self.detailedController?.posterPath {
-                self.posterImage.load(url: url)
+                self.posterImageView.load(url: url)
             }
             
             self.releaseDate.text = self.detailedController?.releaseDate

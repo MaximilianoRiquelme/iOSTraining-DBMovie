@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DetailedController {
+protocol DetailedControllerProtocol {
     var englishTitle: String { get }
     var originalTitle: String { get }
     var posterPath: URL? { get }
@@ -15,7 +15,7 @@ protocol DetailedController {
     var overview: String { get }
 }
 
-class DetailedControllerImp: DetailedController
+class DetailedControllerImplementation: DetailedControllerProtocol
 {
     var englishTitle: String
     var originalTitle: String
@@ -23,15 +23,7 @@ class DetailedControllerImp: DetailedController
     var releaseDate: String
     var overview: String
     
-    init(movie: SingleMovie) {
-        englishTitle = movie.title
-        originalTitle = movie.originalTitle
-        posterPath = URL(string: "https://www.themoviedb.org/t/p/w1280\(movie.posterPath)")
-        releaseDate = "Release Date: \(movie.releaseDate)"
-        overview = movie.overview
-    }
-    
-    init(movie: TopRatedMovie) {
+    init(movie: MovieProtocol) {
         englishTitle = movie.title
         originalTitle = movie.originalTitle
         posterPath = URL(string: "https://www.themoviedb.org/t/p/w1280\(movie.posterPath)")

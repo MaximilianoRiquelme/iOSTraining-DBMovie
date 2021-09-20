@@ -8,7 +8,7 @@
 import Foundation
 
 typealias SingleMovieResult = (Result<SingleMovie, Error>) -> Void
-typealias TopRatedResult = (Result<TopRated, Error>) -> Void
+typealias TopRatedResult = (Result<TopRatedList, Error>) -> Void
 
 enum NetworkingError: Error
 {
@@ -17,34 +17,44 @@ enum NetworkingError: Error
     case parsingError
 }
 
-class NetworkingController
+protocol NetworkingProtocol
 {
-    static func parseSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
-    {
+    func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
+    func getTopRated(page: Int ,completion: @escaping TopRatedResult)
+}
+
+class NetworkingFacade: NetworkingProtocol
+{
+    static let shared = NetworkingFacade()
+    
+    private init() {
+        
+    }
+    
+    func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
+        //Sets the URL
         guard let myUrl = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)?api_key=1f4d7de5836b788bdfd897c3e0d0a24b")
         else{
             completion(.failure(NetworkingError.urlError))
             return
         }
         
-        //let sessionConfig = URLSessionConfiguration.default
-        //let mySession = URLSession(configuration: sessionConfig)
-        
-        let myDataTask = URLSession.shared.dataTask(with: myUrl) { (data, urlResponse, error) in
+        //Starts a DataTask
+        let myDataTask = URLSession.shared.dataTask(with: myUrl) {
+            (data, urlResponse, error) in
+            
             guard let myData = data, error == nil
             else {
                 completion(.failure(NetworkingError.serverError))
                 return
             }
             
-            //If we have a response
-            do
-            {
+            //If we have a response, we try to decode the JSON
+            do {
                 let myMovie = try JSONDecoder().decode(SingleMovie.self, from: myData)
                 completion(.success(myMovie))
             }
-            catch
-            {
+            catch {
                 completion(.failure(NetworkingError.parsingError))
             }
         }
@@ -52,32 +62,30 @@ class NetworkingController
         myDataTask.resume()
     }
     
-    static func parseTopRated(completion: @escaping TopRatedResult)
-    {
-        guard let myUrl = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=1f4d7de5836b788bdfd897c3e0d0a24b")
-        else{
+    func getTopRated(page: Int ,completion: @escaping TopRatedResult) {
+        //Sets the URL
+        guard let myUrl = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=1f4d7de5836b788bdfd897c3e0d0a24b&page=\(page))")
+        else {
             completion(.failure(NetworkingError.urlError))
             return
         }
         
-        //let sessionConfig = URLSessionConfiguration.default
-        //let mySession = URLSession(configuration: sessionConfig)
-        
-        let myDataTask = URLSession.shared.dataTask(with: myUrl) { (data, urlResponse, error) in
+        //Starts a DataTask
+        let myDataTask = URLSession.shared.dataTask(with: myUrl) {
+            (data, urlResponse, error) in
+            
             guard let myData = data, error == nil
             else {
                 completion(.failure(NetworkingError.serverError))
                 return
             }
             
-            //If we have a response
-            do
-            {
-                let myMovies = try JSONDecoder().decode(TopRated.self, from: myData)
+            //If we have a response, we try to decode the JSON
+            do {
+                let myMovies = try JSONDecoder().decode(TopRatedList.self, from: myData)
                 completion(.success(myMovies))
             }
-            catch
-            {
+            catch {
                 completion(.failure(NetworkingError.parsingError))
             }
         }

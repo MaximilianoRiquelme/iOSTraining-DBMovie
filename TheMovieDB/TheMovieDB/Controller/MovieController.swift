@@ -7,22 +7,28 @@
 
 import Foundation
 
-protocol MovieController
+protocol MovieControllerProtocol
 {
-    var singleMovie: SingleMovie? { get }
-    var topRatedMovies: [TopRatedMovie]? { get }
+    var networkingController: NetworkingProtocol { get }
+    var singleMovie: MovieProtocol? { get }
+    var topRatedMovies: [MovieProtocol]? { get }
     
     func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
     func loadTopRated(completion: @escaping TopRatedResult)
 }
 
-class MovieControllerImp: MovieController
+class MovieControllerImplementation: MovieControllerProtocol
 {
-    var singleMovie: SingleMovie?
-    var topRatedMovies: [TopRatedMovie]? = []
+    var networkingController: NetworkingProtocol
+    var singleMovie: MovieProtocol?
+    var topRatedMovies: [MovieProtocol]? = []
+    
+    init(networkingController: NetworkingProtocol) {
+        self.networkingController = networkingController
+    }
     
     func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
-        NetworkingController.parseSingleMovie(movieId: movieId) {
+        networkingController.getSingleMovie(movieId: movieId) {
             [weak self] (result) in
                 DispatchQueue.main.async {
                     switch result
@@ -39,7 +45,7 @@ class MovieControllerImp: MovieController
     }
     
     func loadTopRated(completion: @escaping TopRatedResult) {
-        NetworkingController.parseTopRated {
+        networkingController.getTopRated(page: 1) {
             [weak self] (result) in
                 DispatchQueue.main.async {
                     switch result

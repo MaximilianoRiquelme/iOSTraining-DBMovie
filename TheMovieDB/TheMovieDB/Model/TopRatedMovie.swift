@@ -9,8 +9,8 @@
 
 import Foundation
 
-// MARK: - Movie
-struct TopRated: Codable {
+// MARK: - Top Rated Movie List
+struct TopRatedList: Codable {
     let page: Int
     let results: [TopRatedMovie]
     let totalPages: Int
@@ -24,8 +24,8 @@ struct TopRated: Codable {
     }
 }
 
-// MARK: - Result
-struct TopRatedMovie: Codable {
+// MARK: - Top Rated Movie
+struct TopRatedMovie: MovieProtocol {
     let adult: Bool
     let backdropPath: String
     let genreIDS: [Int]

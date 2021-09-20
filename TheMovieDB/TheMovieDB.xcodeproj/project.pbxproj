@@ -17,13 +17,14 @@
 		E21DDB3A26E7ECC700A610C0 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DDB3826E7ECC700A610C0 /* RootViewController.swift */; };
 		E21DDB3B26E7ECC700A610C0 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21DDB3926E7ECC700A610C0 /* RootViewController.xib */; };
 		E21DDB3D26E8107700A610C0 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DDB3C26E8107700A610C0 /* UIImageView.swift */; };
+		E26C1FE126F8E3D1003D4529 /* MovieProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C1FE026F8E3D1003D4529 /* MovieProtocol.swift */; };
 		E272701326E105DB003DD6F4 /* SingleMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E272701226E105DB003DD6F4 /* SingleMovie.swift */; };
 		E272701626E107EC003DD6F4 /* NetworkingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E272701526E107EC003DD6F4 /* NetworkingController.swift */; };
 		E28CB3DE26E659A3000CD1CA /* DetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CB3DC26E659A3000CD1CA /* DetailedView.swift */; };
 		E28CB3DF26E659A3000CD1CA /* DetailedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28CB3DD26E659A3000CD1CA /* DetailedView.xib */; };
 		E28CB3E126E65C0B000CD1CA /* MovieController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CB3E026E65C0B000CD1CA /* MovieController.swift */; };
 		E28CB3E326E66BD9000CD1CA /* DetailedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CB3E226E66BD9000CD1CA /* DetailedController.swift */; };
-		E28CB3E526E6A772000CD1CA /* TopRated.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CB3E426E6A772000CD1CA /* TopRated.swift */; };
+		E28CB3E526E6A772000CD1CA /* TopRatedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28CB3E426E6A772000CD1CA /* TopRatedMovie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,13 +52,14 @@
 		E21DDB3826E7ECC700A610C0 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		E21DDB3926E7ECC700A610C0 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		E21DDB3C26E8107700A610C0 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		E26C1FE026F8E3D1003D4529 /* MovieProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieProtocol.swift; sourceTree = "<group>"; };
 		E272701226E105DB003DD6F4 /* SingleMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleMovie.swift; sourceTree = "<group>"; };
 		E272701526E107EC003DD6F4 /* NetworkingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingController.swift; sourceTree = "<group>"; };
 		E28CB3DC26E659A3000CD1CA /* DetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedView.swift; sourceTree = "<group>"; };
 		E28CB3DD26E659A3000CD1CA /* DetailedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailedView.xib; sourceTree = "<group>"; };
 		E28CB3E026E65C0B000CD1CA /* MovieController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieController.swift; sourceTree = "<group>"; };
 		E28CB3E226E66BD9000CD1CA /* DetailedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedController.swift; sourceTree = "<group>"; };
-		E28CB3E426E6A772000CD1CA /* TopRated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRated.swift; sourceTree = "<group>"; };
+		E28CB3E426E6A772000CD1CA /* TopRatedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedMovie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		02BCD42926B81F01003F3144 /* TheMovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				E2203F5F26F3964100FF2F31 /* Networking */,
 				E272701426E107B4003DD6F4 /* Controller */,
 				E272701126E105C5003DD6F4 /* Model */,
 				E28CB3DB26E65945000CD1CA /* View */,
@@ -128,11 +131,20 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		E2203F5F26F3964100FF2F31 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E272701526E107EC003DD6F4 /* NetworkingController.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		E272701126E105C5003DD6F4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E26C1FE026F8E3D1003D4529 /* MovieProtocol.swift */,
 				E272701226E105DB003DD6F4 /* SingleMovie.swift */,
-				E28CB3E426E6A772000CD1CA /* TopRated.swift */,
+				E28CB3E426E6A772000CD1CA /* TopRatedMovie.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -140,7 +152,6 @@
 		E272701426E107B4003DD6F4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				E272701526E107EC003DD6F4 /* NetworkingController.swift */,
 				E28CB3E026E65C0B000CD1CA /* MovieController.swift */,
 				E28CB3E226E66BD9000CD1CA /* DetailedController.swift */,
 			);
@@ -268,9 +279,10 @@
 				E272701626E107EC003DD6F4 /* NetworkingController.swift in Sources */,
 				E2015B4726E8FE0F000FE916 /* MovieCell.swift in Sources */,
 				02BCD42B26B81F01003F3144 /* AppDelegate.swift in Sources */,
-				E28CB3E526E6A772000CD1CA /* TopRated.swift in Sources */,
+				E28CB3E526E6A772000CD1CA /* TopRatedMovie.swift in Sources */,
 				E272701326E105DB003DD6F4 /* SingleMovie.swift in Sources */,
 				E21DDB3D26E8107700A610C0 /* UIImageView.swift in Sources */,
+				E26C1FE126F8E3D1003D4529 /* MovieProtocol.swift in Sources */,
 				E28CB3E126E65C0B000CD1CA /* MovieController.swift in Sources */,
 				E21DDB3A26E7ECC700A610C0 /* RootViewController.swift in Sources */,
 				02BCD42D26B81F01003F3144 /* SceneDelegate.swift in Sources */,

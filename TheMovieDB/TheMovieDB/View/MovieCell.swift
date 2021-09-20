@@ -23,7 +23,16 @@ class MovieCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func updateCell(movie: TopRatedMovie)
+    func restoreCell()
+    {
+        //Updates title
+        self.englishTitle.text = ""
+        
+        //Finally, loads the image from url
+        self.posterImage.image = .none
+    }
+    
+    func updateCell(movie: MovieProtocol)
     {
         //Updates title
         self.englishTitle.text = movie.title

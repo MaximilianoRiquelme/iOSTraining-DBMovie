@@ -11,7 +11,7 @@ class RootViewController: UIViewController {
     
     @IBOutlet var moviesTableView: UITableView!
     
-    let moviesController = MovieControllerImp()
+    let moviesController = MovieControllerImplementation(networkingController: NetworkingFacade.shared)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class RootViewController: UIViewController {
     func loadDetailedMovie(index: Int) {
         let detailView = DetailedView(nibName: "DetailedView", bundle: nil)
         
-        detailView.detailedController =  DetailedControllerImp(movie: (self.moviesController.topRatedMovies?[index])!)
+        detailView.detailedController =  DetailedControllerImplementation(movie: (self.moviesController.topRatedMovies?[index])!)
         
         let navVC = UINavigationController(rootViewController: detailView)
         navVC.modalPresentationStyle = .popover
@@ -70,6 +70,8 @@ extension RootViewController: UITableViewDelegate, UITableViewDataSource
         else {
             return UITableViewCell()
         }
+        
+        cell.restoreCell()
         
         //Change the cell with the proper information
         if let movie = moviesController.topRatedMovies?[indexPath.row] {
