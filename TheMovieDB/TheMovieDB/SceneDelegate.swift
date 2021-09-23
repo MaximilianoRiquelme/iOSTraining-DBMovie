@@ -24,10 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
         // Create a ViewController object with provided xib file name.
-        let rootViewController = RootViewController(nibName: "RootViewController", bundle : nil)
+        let topRatedTableView = TopRatedTableView(nibName: "TopRatedTableView", bundle : nil)
+        let rootController = UINavigationController(rootViewController: topRatedTableView)
         
         // Set above root view controller object as the scene's window's root view controller.
-        self.window!.rootViewController = rootViewController
+        self.window!.rootViewController = rootController
                 
         // Make this scene's window be visible.
         self.window!.makeKeyAndVisible()

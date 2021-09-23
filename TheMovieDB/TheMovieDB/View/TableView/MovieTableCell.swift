@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovieCell: UITableViewCell {
+class MovieTableCell: UITableViewCell {
 
     @IBOutlet var englishTitle: UILabel!
     @IBOutlet var posterImage: UIImageView!
@@ -25,11 +25,8 @@ class MovieCell: UITableViewCell {
     
     func restoreCell()
     {
-        //Updates title
-        self.englishTitle.text = ""
-        
-        //Finally, loads the image from url
-        self.posterImage.image = .none
+        self.englishTitle.text = "Loading..."
+        self.posterImage.image = nil
     }
     
     func updateCell(movie: MovieProtocol)

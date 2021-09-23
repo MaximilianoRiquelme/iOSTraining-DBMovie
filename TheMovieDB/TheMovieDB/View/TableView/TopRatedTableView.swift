@@ -7,7 +7,9 @@
 
 import UIKit
 
-class RootViewController: UIViewController {
+class TopRatedTableView: UIViewController {
+    
+    private let cellIdentifier = "MovieTableCell"
     
     @IBOutlet var moviesTableView: UITableView!
     
@@ -24,27 +26,22 @@ class RootViewController: UIViewController {
         
         detailView.detailedController =  DetailedControllerImplementation(movie: (self.moviesController.topRatedMovies?[index])!)
         
-        let navVC = UINavigationController(rootViewController: detailView)
-        navVC.modalPresentationStyle = .popover
-        
-        self.present(navVC, animated: true)
+        self.navigationController?.pushViewController(detailView, animated: true)
     }
 }
 
 /*
     Adds the required functions to manage the TableView
  */
-extension RootViewController: UITableViewDelegate, UITableViewDataSource
+extension TopRatedTableView: UITableViewDelegate, UITableViewDataSource
 {
     func loadTableView() {
-        let nib = UINib(nibName: "MovieCell", bundle: nil)
-        moviesTableView.register(nib, forCellReuseIdentifier: "MovieCell")
+        let nib = UINib(nibName: cellIdentifier, bundle: nil)
+        moviesTableView.register(nib, forCellReuseIdentifier: cellIdentifier)
         
         moviesTableView.delegate = self
         moviesTableView.dataSource = self
-        
-        //moviesTableView.rowHeight = UITableView.automaticDimension
-        moviesTableView.estimatedRowHeight = UITableView.automaticDimension
+        self.title = "Top Rated Movies"
         
         moviesController.loadTopRated() { result in
             self.moviesTableView.reloadData()
@@ -66,7 +63,7 @@ extension RootViewController: UITableViewDelegate, UITableViewDataSource
     //Loads all cells in order
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? MovieTableCell
         else {
             return UITableViewCell()
         }

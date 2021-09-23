@@ -9,6 +9,7 @@ import Foundation
 
 protocol MovieProtocol: Codable
 {
+    var id: Int { get }
     var title: String { get }
     var originalTitle: String { get }
     var posterPath: String { get }

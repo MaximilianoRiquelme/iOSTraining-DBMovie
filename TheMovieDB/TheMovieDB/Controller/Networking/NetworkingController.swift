@@ -7,8 +7,8 @@
 
 import Foundation
 
-typealias SingleMovieResult = (Result<SingleMovie, Error>) -> Void
-typealias TopRatedResult = (Result<TopRatedList, Error>) -> Void
+typealias SingleMovieResult = (Result<MovieProtocol, Error>) -> Void
+typealias MovieListResult = (Result<[MovieProtocol], Error>) -> Void
 
 enum NetworkingError: Error
 {
@@ -20,7 +20,7 @@ enum NetworkingError: Error
 protocol NetworkingProtocol
 {
     func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
-    func getTopRated(page: Int ,completion: @escaping TopRatedResult)
+    func getTopRated(page: Int ,completion: @escaping MovieListResult)
 }
 
 class NetworkingFacade: NetworkingProtocol
@@ -62,7 +62,7 @@ class NetworkingFacade: NetworkingProtocol
         myDataTask.resume()
     }
     
-    func getTopRated(page: Int ,completion: @escaping TopRatedResult) {
+    func getTopRated(page: Int ,completion: @escaping MovieListResult) {
         //Sets the URL
         guard let myUrl = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=1f4d7de5836b788bdfd897c3e0d0a24b&page=\(page))")
         else {
@@ -83,7 +83,7 @@ class NetworkingFacade: NetworkingProtocol
             //If we have a response, we try to decode the JSON
             do {
                 let myMovies = try JSONDecoder().decode(TopRatedList.self, from: myData)
-                completion(.success(myMovies))
+                completion(.success(myMovies.results))
             }
             catch {
                 completion(.failure(NetworkingError.parsingError))

@@ -14,7 +14,7 @@ protocol MovieControllerProtocol
     var topRatedMovies: [MovieProtocol]? { get }
     
     func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
-    func loadTopRated(completion: @escaping TopRatedResult)
+    func loadTopRated(completion: @escaping MovieListResult)
 }
 
 class MovieControllerImplementation: MovieControllerProtocol
@@ -44,14 +44,14 @@ class MovieControllerImplementation: MovieControllerProtocol
         }
     }
     
-    func loadTopRated(completion: @escaping TopRatedResult) {
+    func loadTopRated(completion: @escaping MovieListResult) {
         networkingController.getTopRated(page: 1) {
             [weak self] (result) in
                 DispatchQueue.main.async {
                     switch result
                     {
                         case .success(let myMovies):
-                            self?.topRatedMovies = myMovies.results
+                            self?.topRatedMovies = myMovies
                             completion(result)
                         case .failure(_):
                             self?.topRatedMovies = nil
