@@ -9,22 +9,36 @@ import UIKit
 
 class TopRatedTableView: UIViewController {
     
+    let movieController: MovieControllerProtocol = MovieControllerImplementation(networkingController: NetworkingFacade.shared)
+    
     private let cellIdentifier = "MovieTableCell"
     
     @IBOutlet var moviesTableView: UITableView!
-    
-    let moviesController = MovieControllerImplementation(networkingController: NetworkingFacade.shared)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        loadTableView()
+        
+        self.title = "Top Rated Movies Table"
+        
+        // Register cell classes
+        let nib = UINib(nibName: cellIdentifier, bundle: nil)
+        moviesTableView.register(nib, forCellReuseIdentifier: cellIdentifier)
+        
+        // Sets Delegate and DataSource
+        moviesTableView.delegate = self
+        moviesTableView.dataSource = self
+        
+        // Asks MovieController to load the top rated movies list
+        movieController.loadTopRated() { result in
+            self.moviesTableView.reloadData()
+        }
     }
     
     func loadDetailedMovie(index: Int) {
         let detailView = DetailedView(nibName: "DetailedView", bundle: nil)
         
-        detailView.detailedController =  DetailedControllerImplementation(movie: (self.moviesController.topRatedMovies?[index])!)
+        detailView.detailedController =  DetailedControllerImplementation(movie: (self.movieController.topRatedMovies?[index])!)
         
         self.navigationController?.pushViewController(detailView, animated: true)
     }
@@ -35,19 +49,6 @@ class TopRatedTableView: UIViewController {
  */
 extension TopRatedTableView: UITableViewDelegate, UITableViewDataSource
 {
-    func loadTableView() {
-        let nib = UINib(nibName: cellIdentifier, bundle: nil)
-        moviesTableView.register(nib, forCellReuseIdentifier: cellIdentifier)
-        
-        moviesTableView.delegate = self
-        moviesTableView.dataSource = self
-        self.title = "Top Rated Movies"
-        
-        moviesController.loadTopRated() { result in
-            self.moviesTableView.reloadData()
-        }
-    }
-        
     //Called when a cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -57,7 +58,7 @@ extension TopRatedTableView: UITableViewDelegate, UITableViewDataSource
     //Sets the amount of rows on the table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return moviesController.topRatedMovies?.count ?? Int.zero
+        return movieController.topRatedMovies?.count ?? Int.zero
     }
     
     //Loads all cells in order
@@ -68,10 +69,11 @@ extension TopRatedTableView: UITableViewDelegate, UITableViewDataSource
             return UITableViewCell()
         }
         
+        // Restores the cell properties before being reused
         cell.restoreCell()
         
         //Change the cell with the proper information
-        if let movie = moviesController.topRatedMovies?[indexPath.row] {
+        if let movie = movieController.topRatedMovies?[indexPath.row] {
             cell.updateCell(movie: movie)
         }
         

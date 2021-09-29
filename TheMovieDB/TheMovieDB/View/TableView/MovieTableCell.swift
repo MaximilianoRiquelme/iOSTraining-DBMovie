@@ -23,14 +23,12 @@ class MovieTableCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func restoreCell()
-    {
+    func restoreCell() {
         self.englishTitle.text = "Loading..."
         self.posterImage.image = nil
     }
     
-    func updateCell(movie: MovieProtocol)
-    {
+    func updateCell(movie: MovieProtocol) {
         //Updates title
         self.englishTitle.text = movie.title
         
