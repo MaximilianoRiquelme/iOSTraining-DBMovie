@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DetailedControllerProtocol {
+protocol DetailedManagerProtocol {
     var englishTitle: String { get }
     var originalTitle: String { get }
     var posterPath: URL? { get }
@@ -15,7 +15,7 @@ protocol DetailedControllerProtocol {
     var overview: String { get }
 }
 
-class DetailedControllerImplementation: DetailedControllerProtocol
+class DetailedManager: DetailedManagerProtocol
 {
     var englishTitle: String
     var originalTitle: String

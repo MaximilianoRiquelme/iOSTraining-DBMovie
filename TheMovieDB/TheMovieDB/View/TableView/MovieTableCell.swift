@@ -7,8 +7,8 @@
 
 import UIKit
 
-class MovieTableCell: UITableViewCell {
-
+class MovieTableCell: UITableViewCell
+{
     @IBOutlet var englishTitle: UILabel!
     @IBOutlet var posterImage: UIImageView!
     
@@ -16,13 +16,10 @@ class MovieTableCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
+extension MovieTableCell: MovieListCell
+{
     func restoreCell() {
         self.englishTitle.text = "Loading..."
         self.posterImage.image = nil

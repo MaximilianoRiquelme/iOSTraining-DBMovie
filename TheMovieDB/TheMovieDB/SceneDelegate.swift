@@ -24,10 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
         // Create a ViewController object with provided xib file name.
-        
-        //let firstViewController = TopRatedTableView(nibName: "TopRatedTableView", bundle : nil)
-        let firstViewController = TopRatedCollectionView(nibName: "TopRatedCollectionView", bundle : nil)
-        //let firstViewController = RootViewController(nibName: "RootViewController", bundle : nil)
+        let firstViewController = MainViewController(nibName: MainViewController.nibName, bundle : nil)
         let rootController = UINavigationController(rootViewController: firstViewController)
         
         // Set above root view controller object as the scene's window's root view controller.

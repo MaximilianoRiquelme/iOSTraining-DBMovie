@@ -17,15 +17,15 @@ enum NetworkingError: Error
     case parsingError
 }
 
-protocol NetworkingProtocol
+protocol NetworkingManagerProtocol
 {
     func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
     func getTopRated(page: Int ,completion: @escaping MovieListResult)
 }
 
-class NetworkingFacade: NetworkingProtocol
+class NetworkingManager: NetworkingManagerProtocol
 {
-    static let shared = NetworkingFacade()
+    static let shared = NetworkingManager()
     
     private init() {
         

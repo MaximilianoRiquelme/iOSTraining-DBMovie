@@ -15,7 +15,7 @@ class DetailedView: UIViewController
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet var overview: UILabel!
     
-    var detailedController: DetailedControllerProtocol?
+    var detailedController: DetailedManagerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()

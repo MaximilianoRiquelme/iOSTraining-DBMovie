@@ -8,31 +8,29 @@
 import XCTest
 @testable import TheMovieDB
 
-class MovieControllerTests: XCTestCase {
+class MovieManagerTests: XCTestCase {
     
-    var systemUnderTest: MovieControllerImplementation!
-    var mockNetworkingFacade: MockNetworkingFacade!
+    var systemUnderTest: MovieManager!
+    var mockNetworkingManager: MockNetworkingFacade!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         try super.setUpWithError()
-        mockNetworkingFacade = MockNetworkingFacade()
-        systemUnderTest = MovieControllerImplementation(networkingController: mockNetworkingFacade)
+        mockNetworkingManager = MockNetworkingFacade()
+        systemUnderTest = MovieManager(networkingController: mockNetworkingManager)
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        mockNetworkingFacade = nil
+        mockNetworkingManager = nil
         systemUnderTest = nil
         try super.tearDownWithError()
     }
 
     func testLoadSingleMovieSuccess() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let expectation = self.expectation(description: "Expectation")
         
-        mockNetworkingFacade.success =  true
+        mockNetworkingManager.success =  true
         
         systemUnderTest.loadSingleMovie(movieId: "id") { result in
             switch result {
@@ -50,9 +48,45 @@ class MovieControllerTests: XCTestCase {
     func testLoadSingleMovieFailure() {
         let expectation = self.expectation(description: "Expectation")
         
-        mockNetworkingFacade.success = false
+        mockNetworkingManager.success = false
         
         systemUnderTest.loadSingleMovie(movieId: "id") { result in
+            switch result {
+            case .success(_):
+                XCTFail("Expected failure instead.")
+            case .failure(let error):
+                XCTAssertNotNil(error)
+            }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 0.2, handler: nil)
+    }
+    
+    func testLoadTopRatedSuccess() {
+        let expectation = self.expectation(description: "Expectation")
+        
+        mockNetworkingManager.success =  true
+        
+        systemUnderTest.loadTopRated() { result in
+            switch result {
+            case .success(let myMovies):
+                XCTAssertNotNil(myMovies)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 0.2, handler: nil)
+    }
+    
+    func testLoadTopRatedFailure() {
+        let expectation = self.expectation(description: "Expectation")
+        
+        mockNetworkingManager.success = false
+        
+        systemUnderTest.loadTopRated() { result in
             switch result {
             case .success(_):
                 XCTFail("Expected failure instead.")
@@ -74,7 +108,7 @@ class MovieControllerTests: XCTestCase {
 
 }
 
-class MockNetworkingFacade: NetworkingProtocol {
+class MockNetworkingFacade: NetworkingManagerProtocol {
     var success = true
     
     func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
@@ -87,7 +121,13 @@ class MockNetworkingFacade: NetworkingProtocol {
     }
     
     func getTopRated(page: Int, completion: @escaping MovieListResult) {
-        
+        if success {
+            let mockMovie = MockMovie(id: 1, title: "titulo", originalTitle: "titutlo", posterPath: "url", releaseDate: "fecha", overview: "descripcion")
+            let movieArray = Array.init(arrayLiteral: mockMovie)
+            completion(.success(movieArray))
+        } else {
+            completion(.failure(MockError()))
+        }
     }
     
     

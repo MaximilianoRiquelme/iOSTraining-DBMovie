@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol MovieControllerProtocol
+protocol MovieManagerProtocol
 {
-    var networkingController: NetworkingProtocol { get }
+    var networkingManager: NetworkingManagerProtocol { get }
     var singleMovie: MovieProtocol? { get }
     var topRatedMovies: [MovieProtocol]? { get }
     
@@ -17,18 +17,18 @@ protocol MovieControllerProtocol
     func loadTopRated(completion: @escaping MovieListResult)
 }
 
-class MovieControllerImplementation: MovieControllerProtocol
+class MovieManager: MovieManagerProtocol
 {
-    var networkingController: NetworkingProtocol
+    var networkingManager: NetworkingManagerProtocol
     var singleMovie: MovieProtocol?
     var topRatedMovies: [MovieProtocol]? = []
     
-    init(networkingController: NetworkingProtocol) {
-        self.networkingController = networkingController
+    init(networkingController: NetworkingManagerProtocol) {
+        self.networkingManager = networkingController
     }
     
     func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
-        networkingController.getSingleMovie(movieId: movieId) {
+        networkingManager.getSingleMovie(movieId: movieId) {
             [weak self] (result) in
                 DispatchQueue.main.async {
                     switch result
@@ -45,7 +45,7 @@ class MovieControllerImplementation: MovieControllerProtocol
     }
     
     func loadTopRated(completion: @escaping MovieListResult) {
-        networkingController.getTopRated(page: 1) {
+        networkingManager.getTopRated(page: 1) {
             [weak self] (result) in
                 DispatchQueue.main.async {
                     switch result

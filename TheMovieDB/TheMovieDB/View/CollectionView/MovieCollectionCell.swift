@@ -17,7 +17,7 @@ class MovieCollectionCell: UICollectionViewCell
     }
 }
 
-extension MovieCollectionCell: MovieCellProtocol
+extension MovieCollectionCell: MovieListCell
 {
     func restoreCell() {
         self.posterImage.image = nil
