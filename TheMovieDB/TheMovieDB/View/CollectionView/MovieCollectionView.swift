@@ -12,16 +12,27 @@ class MovieCollectionView: UICollectionView, MovieListProtocol
 {
     private let cellIdentifier: String = "MovieCollectionCell"
     
+    var view: UIView?
     var movieListDataSource: MovieListDataSource?
     
-    override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout)
-    {
-        super.init(frame: frame, collectionViewLayout: collectionViewLayout)
+    init(frame: CGRect, movieManager: MovieManagerProtocol) {
+        
+        // Set up a layout for the MovieList as a Collection
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 200, height: 200)
+        
+        super.init(frame: frame, collectionViewLayout: layout)
         
         // Register cell classes
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: cellIdentifier)
         self.dataSource = self
+        //self.delegate = self
+        
+        self.movieListDataSource = MovieListDataSource()
+        self.movieListDataSource?.movieManager = movieManager
+        
+        view = self
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +44,7 @@ class MovieCollectionView: UICollectionView, MovieListProtocol
     }
 }
 
+// MARK: UICollectionViewDataSource
 extension MovieCollectionView: UICollectionViewDataSource
 {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -66,3 +78,19 @@ extension MovieCollectionView: UICollectionViewDataSource
         return cell
     }
 }
+/*
+// MARK: UICollectionViewDelegates
+extension MovieCollectionView: UICollectionViewDelegate
+{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        loadDetailedMovie(index: indexPath.row)
+    }
+}
+
+extension MovieCollectionView: UICollectionViewDelegateFlowLayout
+{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 200, height: 300)
+    }
+}
+*/

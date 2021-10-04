@@ -15,6 +15,7 @@ enum MovieListError: Error {
 protocol MovieListProtocol
 {
     var movieListDataSource: MovieListDataSource? { get set }
+    var view: UIView? { get }
     
     func reloadData()
 }

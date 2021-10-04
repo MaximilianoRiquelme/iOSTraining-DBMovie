@@ -31,7 +31,6 @@
 		E2914916270757C1008F6553 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2914914270757C1008F6553 /* MainViewController.swift */; };
 		E2914917270757C1008F6553 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2914915270757C1008F6553 /* MainViewController.xib */; };
 		E291491A27075C6D008F6553 /* MovieTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291491927075C6D008F6553 /* MovieTableView.swift */; };
-		E291491D2707657A008F6553 /* MovieListCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291491C2707657A008F6553 /* MovieListCreator.swift */; };
 		E2A841D92704F93A00706A57 /* MovieCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A841D82704F93A00706A57 /* MovieCollectionView.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +73,6 @@
 		E2914914270757C1008F6553 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E2914915270757C1008F6553 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		E291491927075C6D008F6553 /* MovieTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableView.swift; sourceTree = "<group>"; };
-		E291491C2707657A008F6553 /* MovieListCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCreator.swift; sourceTree = "<group>"; };
 		E2A841D82704F93A00706A57 /* MovieCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,7 +209,6 @@
 			children = (
 				E2914914270757C1008F6553 /* MainViewController.swift */,
 				E2914915270757C1008F6553 /* MainViewController.xib */,
-				E291491C2707657A008F6553 /* MovieListCreator.swift */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -344,7 +341,6 @@
 				E291491A27075C6D008F6553 /* MovieTableView.swift in Sources */,
 				E28CB3DE26E659A3000CD1CA /* DetailedView.swift in Sources */,
 				E272701626E107EC003DD6F4 /* NetworkingManager.swift in Sources */,
-				E291491D2707657A008F6553 /* MovieListCreator.swift in Sources */,
 				E2015B4726E8FE0F000FE916 /* MovieTableCell.swift in Sources */,
 				E21BECDB26FE1FE40079F2FE /* MovieListCell.swift in Sources */,
 				E21BECD926FE1FCA0079F2FE /* MovieListProtocol.swift in Sources */,

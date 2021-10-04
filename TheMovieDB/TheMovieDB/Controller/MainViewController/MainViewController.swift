@@ -13,17 +13,22 @@ class MainViewController: UIViewController
     
     let movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager.shared)
     
-    let movieListCreator = MovieListCreator()
-    
     var movieList: MovieListProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         self.title = "Top Rated Movies"
         
-        movieList = movieListCreator.createMovieListAsGrid(mainVC: self)
+        // Creates the MovieList
+        //let myMovieList = MovieCollectionView(frame: view.frame, movieManager: movieManager)
+        let myMovieList = MovieTableView(frame: view.frame, movieManager: movieManager)
+        myMovieList.delegate = self
+        movieList = myMovieList
+        
+        //Add the MovieList
+        view.addSubview((movieList?.view)!)
+        applyConstraintsTo(superView: view, subView: (movieList?.view)!)
         
         // Asks the MovieManager to load the top rated movies list
         movieManager.loadTopRated() { result in
@@ -37,6 +42,19 @@ class MainViewController: UIViewController
         detailView.detailedController =  DetailedManager(movie: (self.movieManager.topRatedMovies?[index])!)
         
         self.navigationController?.pushViewController(detailView, animated: true)
+    }
+    
+    private func applyConstraintsTo(superView: UIView, subView: UIView) {
+        var constraints = [NSLayoutConstraint]()
+        
+        subView.translatesAutoresizingMaskIntoConstraints = false
+        
+        constraints.append(subView.leadingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.leadingAnchor))
+        constraints.append(subView.trailingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.trailingAnchor))
+        constraints.append(subView.topAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor))
+        constraints.append(subView.bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.bottomAnchor))
+        
+        NSLayoutConstraint.activate(constraints)
     }
 }
 

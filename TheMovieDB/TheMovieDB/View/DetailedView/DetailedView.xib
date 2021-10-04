@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,17 +30,16 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6O1-YU-rFS" userLabel="poster">
-                    <rect key="frame" x="20.5" y="49.5" width="373" height="736"/>
-                    <color key="backgroundColor" name="AccentColor"/>
+                    <rect key="frame" x="20.5" y="49.5" width="373" height="572.5"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PsQ-fY-MNl" userLabel="releaseDate">
-                    <rect key="frame" x="10.5" y="800.5" width="393" height="21"/>
+                    <rect key="frame" x="10.5" y="637" width="393" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e2z-rr-yEi" userLabel="overview">
-                    <rect key="frame" x="0.0" y="836.5" width="414" height="44.5"/>
+                    <rect key="frame" x="0.0" y="673" width="414" height="208"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -61,17 +59,14 @@
                 <constraint firstItem="OHC-f5-KhS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gcF-9Z-wgf"/>
                 <constraint firstItem="PsQ-fY-MNl" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gyZ-1H-76h"/>
                 <constraint firstItem="e2z-rr-yEi" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jwR-bE-Gcj"/>
-                <constraint firstItem="6O1-YU-rFS" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.9" id="l7S-1m-Otb"/>
                 <constraint firstItem="OHC-f5-KhS" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.95" id="rOR-fb-uf8"/>
                 <constraint firstItem="6O1-YU-rFS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="v5s-UZ-Qcv"/>
+                <constraint firstItem="6O1-YU-rFS" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.7" id="vzD-Wu-SLR"/>
             </constraints>
             <point key="canvasLocation" x="24.637681159420293" y="85.714285714285708"/>
         </view>
     </objects>
     <resources>
-        <namedColor name="AccentColor">
-            <color red="0.36800000071525574" green="1" blue="0.57300001382827759" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

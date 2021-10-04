@@ -12,18 +12,25 @@ class MovieTableView: UITableView, MovieListProtocol
 {
     private let cellIdentifier: String = "MovieTableCell"
     
+    var view: UIView?
     var movieListDataSource: MovieListDataSource?
     
-    override init(frame: CGRect, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
+    init(frame: CGRect, movieManager: MovieManagerProtocol) {
+        super.init(frame: frame, style: .plain)
         
         // Register cell classes
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.register(nib, forCellReuseIdentifier: cellIdentifier)
         self.dataSource = self
+        //self.delegate = self
         
         self.rowHeight = 150
         self.contentMode = .scaleToFill
+        
+        self.movieListDataSource = MovieListDataSource()
+        self.movieListDataSource?.movieManager = movieManager
+        
+        view = self
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +42,7 @@ class MovieTableView: UITableView, MovieListProtocol
     }
 }
 
+// MARK: UITableViewDataSource
 extension MovieTableView: UITableViewDataSource
 {
     //Sets the amount of rows on the table
@@ -67,3 +75,17 @@ extension MovieTableView: UITableViewDataSource
         return cell
     }
 }
+/*
+// MARK: UITableViewDelegate
+extension MovieTableView: UITableViewDelegate
+{
+    //Called when a cell is selected
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        loadDetailedMovie(index: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+*/
