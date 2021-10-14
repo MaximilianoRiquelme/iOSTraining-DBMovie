@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailedView: UIViewController
+class DetailView: UIViewController
 {
     @IBOutlet var englishTitle: UILabel!
     @IBOutlet var originalTitle: UILabel!
@@ -15,26 +15,26 @@ class DetailedView: UIViewController
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet var overview: UILabel!
     
-    var detailedController: DetailedManagerProtocol?
+    var detailedManager: DetailViewModelProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        loadDetails()
+        loadModel()
     }
 
-    func loadDetails() {
+    func loadModel() {
         DispatchQueue.main.async {
-            self.title = self.detailedController?.englishTitle
+            self.title = self.detailedManager?.englishTitle
             
-            self.originalTitle.text = self.detailedController?.originalTitle
+            self.originalTitle.text = self.detailedManager?.originalTitle
             
-            if let url = self.detailedController?.posterPath {
+            if let url = self.detailedManager?.posterPath {
                 self.posterImageView.load(url: url)
             }
             
-            self.releaseDate.text = self.detailedController?.releaseDate
-            self.overview.text = self.detailedController?.overview
+            self.releaseDate.text = self.detailedManager?.releaseDate
+            self.overview.text = self.detailedManager?.overview
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DetailedManagerProtocol {
+protocol DetailViewModelProtocol {
     var englishTitle: String { get }
     var originalTitle: String { get }
     var posterPath: URL? { get }
@@ -15,7 +15,7 @@ protocol DetailedManagerProtocol {
     var overview: String { get }
 }
 
-class DetailedManager: DetailedManagerProtocol
+class DetailViewModel: DetailViewModelProtocol
 {
     var englishTitle: String
     var originalTitle: String

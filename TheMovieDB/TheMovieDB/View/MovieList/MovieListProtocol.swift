@@ -14,7 +14,10 @@ enum MovieListError: Error {
 
 protocol MovieListProtocol
 {
-    var movieListDataSource: MovieListDataSource? { get set }
+    init(movieListDelegate: MovieListDelegateProtocol, movieListDataSource: MovieListDataSourceProtocol)
+    
+    var movieListDataSource: MovieListDataSourceProtocol { get }
+    var movieListDelegate: MovieListDelegateProtocol { get }
     var view: UIView? { get }
     
     func reloadData()
@@ -22,9 +25,17 @@ protocol MovieListProtocol
 
 protocol MovieListDataSourceProtocol
 {
-    var movieManager: MovieManagerProtocol? { get set }
+    var movieManager: MovieManagerProtocol { get }
     
     func numberOfSections() -> Int
     func numberOfItemsInSection(section: Int) -> Int
     func cellForItemAt(indexPath: IndexPath) throws -> MovieProtocol
+}
+
+protocol MovieListDelegateProtocol
+{
+    var movieManager: MovieManagerProtocol { get }
+    var navigationController: UINavigationController? { get }
+    
+    func loadDetailView(index: Int)
 }

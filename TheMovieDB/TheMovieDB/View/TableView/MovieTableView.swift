@@ -13,24 +13,25 @@ class MovieTableView: UITableView, MovieListProtocol
     private let cellIdentifier: String = "MovieTableCell"
     
     var view: UIView?
-    var movieListDataSource: MovieListDataSource?
+    var movieListDataSource: MovieListDataSourceProtocol
+    var movieListDelegate: MovieListDelegateProtocol
     
-    init(frame: CGRect, movieManager: MovieManagerProtocol) {
-        super.init(frame: frame, style: .plain)
+    required init(movieListDelegate: MovieListDelegateProtocol, movieListDataSource: MovieListDataSourceProtocol) {
+        self.movieListDataSource = movieListDataSource
+        self.movieListDelegate = movieListDelegate
+        
+        super.init(frame: .zero, style: .plain)
         
         // Register cell classes
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.register(nib, forCellReuseIdentifier: cellIdentifier)
         self.dataSource = self
-        //self.delegate = self
+        self.delegate = self
         
         self.rowHeight = 150
         self.contentMode = .scaleToFill
         
-        self.movieListDataSource = MovieListDataSource()
-        self.movieListDataSource?.movieManager = movieManager
-        
-        view = self
+        self.view = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +49,7 @@ extension MovieTableView: UITableViewDataSource
     //Sets the amount of rows on the table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return movieListDataSource?.numberOfItemsInSection(section: section) ?? Int.zero
+        return movieListDataSource.numberOfItemsInSection(section: section)
     }
     
     //Loads all cells in order
@@ -65,7 +66,7 @@ extension MovieTableView: UITableViewDataSource
         var movieData: MovieProtocol
         
         do {
-            try movieData = (movieListDataSource?.cellForItemAt(indexPath: indexPath))!
+            try movieData = (movieListDataSource.cellForItemAt(indexPath: indexPath))
         } catch {
             return MovieTableCell()
         }
@@ -75,17 +76,12 @@ extension MovieTableView: UITableViewDataSource
         return cell
     }
 }
-/*
+
 // MARK: UITableViewDelegate
 extension MovieTableView: UITableViewDelegate
 {
     //Called when a cell is selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        loadDetailedMovie(index: indexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        movieListDelegate.loadDetailView(index: indexPath.row)
     }
 }
-*/

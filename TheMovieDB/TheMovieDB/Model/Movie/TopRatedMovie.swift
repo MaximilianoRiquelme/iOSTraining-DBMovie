@@ -59,4 +59,19 @@ struct TopRatedMovie: MovieProtocol
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
+    
+    /*
+    static func ==(lhs: MovieProtocol, rhs: MovieProtocol) -> Bool {
+        if let l = lhs, r = rhs {
+            return l.id == r.id &&
+                    l.title == r.title &&
+                    l.originalTitle == r.originalTitle &&
+                    l.posterPath == r.posterPath &&
+                    l.releaseDate == r.releaseDate &&
+                    l.overview == r.overview
+        }
+        
+        return false
+    }
+     */
 }

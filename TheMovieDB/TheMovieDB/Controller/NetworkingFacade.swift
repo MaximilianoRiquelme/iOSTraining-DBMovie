@@ -23,9 +23,9 @@ protocol NetworkingManagerProtocol
     func getTopRated(page: Int ,completion: @escaping MovieListResult)
 }
 
-class NetworkingManager: NetworkingManagerProtocol
+class NetworkingFacade: NetworkingManagerProtocol
 {
-    static let shared = NetworkingManager()
+    static let shared = NetworkingFacade()
     
     private init() {
         

@@ -65,6 +65,22 @@ struct SingleMovie: MovieProtocol
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
+    
+    /*
+    static func ==(lhs: MovieProtocol, rhs: MovieProtocol) -> Bool {
+        guard type(of: lhs) == type(of: rhs)
+        else {
+            return false
+        }
+        
+        return lhs.id == rhs.id &&
+                lhs.title == rhs.title &&
+                lhs.originalTitle == rhs.originalTitle &&
+                lhs.posterPath == rhs.posterPath &&
+                lhs.releaseDate == rhs.releaseDate &&
+                lhs.overview == rhs.overview
+    }
+     */
 }
 
 // MARK: - BelongsToCollection

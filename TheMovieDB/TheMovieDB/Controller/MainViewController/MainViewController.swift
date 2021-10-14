@@ -11,37 +11,23 @@ class MainViewController: UIViewController
 {
     static let nibName = "MainViewController"
     
-    let movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager.shared)
+    let movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingFacade.shared)
     
-    var movieList: MovieListProtocol?
+    lazy var movieList: MovieListProtocol = MovieCollectionView(movieListDelegate: self, movieListDataSource: MovieListDataSource(movieManager: movieManager))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.title = "Top Rated Movies"
         
-        // Creates the MovieList
-        //let myMovieList = MovieCollectionView(frame: view.frame, movieManager: movieManager)
-        let myMovieList = MovieTableView(frame: view.frame, movieManager: movieManager)
-        myMovieList.delegate = self
-        movieList = myMovieList
-        
         //Add the MovieList
-        view.addSubview((movieList?.view)!)
-        applyConstraintsTo(superView: view, subView: (movieList?.view)!)
+        view.addSubview((movieList.view)!)
+        applyConstraintsTo(superView: view, subView: (movieList.view)!)
         
         // Asks the MovieManager to load the top rated movies list
         movieManager.loadTopRated() { result in
-            self.movieList?.reloadData()
+            self.movieList.reloadData()
         }
-    }
-    
-    func loadDetailedMovie(index: Int) {
-        let detailView = DetailedView(nibName: "DetailedView", bundle: nil)
-        
-        detailView.detailedController =  DetailedManager(movie: (self.movieManager.topRatedMovies?[index])!)
-        
-        self.navigationController?.pushViewController(detailView, animated: true)
     }
     
     private func applyConstraintsTo(superView: UIView, subView: UIView) {
@@ -58,30 +44,13 @@ class MainViewController: UIViewController
     }
 }
 
-// MARK: UICollectionViewDelegates
-extension MainViewController: UICollectionViewDelegate
+extension MainViewController: MovieListDelegateProtocol
 {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        loadDetailedMovie(index: indexPath.row)
-    }
-}
-
-extension MainViewController: UICollectionViewDelegateFlowLayout
-{
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 300)
-    }
-}
-
-// MARK: UITableViewDelegate
-extension MainViewController: UITableViewDelegate
-{
-    //Called when a cell is selected
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        loadDetailedMovie(index: indexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func loadDetailView(index: Int) {
+        let detailView = DetailView(nibName: "DetailedView", bundle: nil)
+        
+        detailView.detailedManager =  DetailViewModel(movie: (self.movieManager.topRatedMovies?[index])!)
+        
+        self.navigationController?.pushViewController(detailView, animated: true)
     }
 }

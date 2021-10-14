@@ -13,26 +13,27 @@ class MovieCollectionView: UICollectionView, MovieListProtocol
     private let cellIdentifier: String = "MovieCollectionCell"
     
     var view: UIView?
-    var movieListDataSource: MovieListDataSource?
+    var movieListDataSource: MovieListDataSourceProtocol
+    var movieListDelegate: MovieListDelegateProtocol
     
-    init(frame: CGRect, movieManager: MovieManagerProtocol) {
+    required init(movieListDelegate: MovieListDelegateProtocol, movieListDataSource: MovieListDataSourceProtocol) {
+        
+        self.movieListDataSource = movieListDataSource
+        self.movieListDelegate = movieListDelegate
         
         // Set up a layout for the MovieList as a Collection
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 200, height: 200)
         
-        super.init(frame: frame, collectionViewLayout: layout)
+        super.init(frame: .zero, collectionViewLayout: layout)
         
         // Register cell classes
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: cellIdentifier)
         self.dataSource = self
-        //self.delegate = self
+        self.delegate = self
         
-        self.movieListDataSource = MovieListDataSource()
-        self.movieListDataSource?.movieManager = movieManager
-        
-        view = self
+        self.view = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,11 +49,11 @@ class MovieCollectionView: UICollectionView, MovieListProtocol
 extension MovieCollectionView: UICollectionViewDataSource
 {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return movieListDataSource?.numberOfSections() ?? 0
+        return movieListDataSource.numberOfSections()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieListDataSource?.numberOfItemsInSection(section: section) ?? 0
+        return movieListDataSource.numberOfItemsInSection(section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -68,7 +69,7 @@ extension MovieCollectionView: UICollectionViewDataSource
         var movie: MovieProtocol
         
         do {
-            try movie = (movieListDataSource?.cellForItemAt(indexPath: indexPath))!
+            try movie = (movieListDataSource.cellForItemAt(indexPath: indexPath))
         } catch {
             return MovieCollectionCell()
         }
@@ -78,19 +79,21 @@ extension MovieCollectionView: UICollectionViewDataSource
         return cell
     }
 }
-/*
-// MARK: UICollectionViewDelegates
-extension MovieCollectionView: UICollectionViewDelegate
+
+// MARK: UICollectionViewDelegateFLowLayout
+extension MainViewController: UICollectionViewDelegateFlowLayout
 {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        loadDetailedMovie(index: indexPath.row)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height = self.view.frame.height
+        let width = self.view.frame.width
+        return CGSize(width: width/2.1, height: height/3)
     }
 }
 
-extension MovieCollectionView: UICollectionViewDelegateFlowLayout
+// MARK: UICollectionViewDelegate
+extension MovieCollectionView: UICollectionViewDelegate
 {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 300)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        movieListDelegate.loadDetailView(index: indexPath.row)
     }
 }
-*/

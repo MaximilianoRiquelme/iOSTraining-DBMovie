@@ -6,23 +6,26 @@
 //
 
 import Foundation
-import UIKit
 
 class MovieListDataSource: MovieListDataSourceProtocol
 {
-    var movieManager: MovieManagerProtocol?
+    var movieManager: MovieManagerProtocol
+    
+    init (movieManager: MovieManagerProtocol) {
+        self.movieManager = movieManager
+    }
     
     func numberOfSections() -> Int {
         1
     }
     
     func numberOfItemsInSection(section: Int) -> Int {
-        return self.movieManager?.topRatedMovies?.count ?? Int.zero
+        return self.movieManager.topRatedMovies?.count ?? Int.zero
     }
     
     func cellForItemAt(indexPath: IndexPath) throws -> MovieProtocol {
         //Change the cell with the proper information
-        guard let movie = movieManager?.topRatedMovies?[indexPath.row]
+        guard let movie = movieManager.topRatedMovies?[indexPath.row]
         else {
             throw MovieListError.CellNotFound
         }
