@@ -10,20 +10,18 @@ import XCTest
 
 class MovieManagerTests: XCTestCase {
     
-    private var systemUnderTest: MovieManager!
-    private var mockNetworkingManager: MockNetworkingFacade!
+    private var sut: MovieManager!
+    private var mockNetworkingManager: MockNetworkingManager!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         try super.setUpWithError()
-        mockNetworkingManager = MockNetworkingFacade()
-        systemUnderTest = MovieManager(networkingController: mockNetworkingManager)
+        mockNetworkingManager = MockNetworkingManager()
+        sut = MovieManager(networkingController: mockNetworkingManager)
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         mockNetworkingManager = nil
-        systemUnderTest = nil
+        sut = nil
         try super.tearDownWithError()
     }
 
@@ -31,12 +29,13 @@ class MovieManagerTests: XCTestCase {
         let expectation = self.expectation(description: "Expectation")
         
         mockNetworkingManager.success =  true
+        mockNetworkingManager.mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
         
-        systemUnderTest.loadSingleMovie(movieId: "id") { result in
+        sut.loadSingleMovie(movieId: "id") { result in
             switch result {
             case .success(let movie):
                 XCTAssertNotNil(movie)
-                XCTAssertEqual(movie.id, self.mockNetworkingManager.mockMovie.id)
+                XCTAssertEqual(movie.id, self.mockNetworkingManager.mockMovie?.id)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -50,8 +49,9 @@ class MovieManagerTests: XCTestCase {
         let expectation = self.expectation(description: "Expectation")
         
         mockNetworkingManager.success = false
+        mockNetworkingManager.mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
         
-        systemUnderTest.loadSingleMovie(movieId: "id") { result in
+        sut.loadSingleMovie(movieId: "id") { result in
             switch result {
             case .success(_):
                 XCTFail("Expected failure instead.")
@@ -68,12 +68,13 @@ class MovieManagerTests: XCTestCase {
         let expectation = self.expectation(description: "Expectation")
         
         mockNetworkingManager.success =  true
+        mockNetworkingManager.mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
         
-        systemUnderTest.loadTopRated() { result in
+        sut.loadTopRated() { result in
             switch result {
             case .success(let myMovies):
                 XCTAssertNotNil(myMovies)
-                XCTAssertEqual(myMovies[0].id, self.mockNetworkingManager.mockMovie.id)
+                XCTAssertEqual(myMovies[0].id, self.mockNetworkingManager.mockMovie?.id)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
@@ -88,7 +89,7 @@ class MovieManagerTests: XCTestCase {
         
         mockNetworkingManager.success = false
         
-        systemUnderTest.loadTopRated() { result in
+        sut.loadTopRated() { result in
             switch result {
             case .success(_):
                 XCTFail("Expected failure instead.")
@@ -102,15 +103,16 @@ class MovieManagerTests: XCTestCase {
     }
 }
 
-class MockNetworkingFacade: NetworkingManagerProtocol {
+class MockNetworkingManager: NetworkingManagerProtocol {
     
     var success = true
-    
-    let mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
+    var mockMovie: MovieProtocol?
     
     func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
         if success {
-            completion(.success(mockMovie))
+            if let movie = mockMovie {
+                completion(.success(movie))
+            }
         } else {
             completion(.failure(MockError()))
         }
@@ -118,8 +120,11 @@ class MockNetworkingFacade: NetworkingManagerProtocol {
     
     func getTopRated(page: Int, completion: @escaping MovieListResult) {
         if success {
-            let movieArray = Array.init(arrayLiteral: mockMovie)
-            completion(.success(movieArray))
+            if let movie = mockMovie {
+                let movieArray = Array.init(arrayLiteral: movie)
+                completion(.success(movieArray))
+            }
+            
         } else {
             completion(.failure(MockError()))
         }

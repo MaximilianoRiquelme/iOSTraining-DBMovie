@@ -1,5 +1,5 @@
 //
-//  NetworkingTest.swift
+//  NetworkingManager.swift
 //  TheMovieDB
 //
 //  Created by Maximiliano Riquelme Vera on 02/09/2021.
@@ -7,25 +7,9 @@
 
 import Foundation
 
-typealias SingleMovieResult = (Result<MovieProtocol, Error>) -> Void
-typealias MovieListResult = (Result<[MovieProtocol], Error>) -> Void
-
-enum NetworkingError: Error
+class NetworkingManager: NetworkingManagerProtocol
 {
-    case urlError
-    case serverError
-    case parsingError
-}
-
-protocol NetworkingManagerProtocol
-{
-    func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
-    func getTopRated(page: Int ,completion: @escaping MovieListResult)
-}
-
-class NetworkingFacade: NetworkingManagerProtocol
-{
-    static let shared = NetworkingFacade()
+    static let shared = NetworkingManager()
     
     private init() {
         

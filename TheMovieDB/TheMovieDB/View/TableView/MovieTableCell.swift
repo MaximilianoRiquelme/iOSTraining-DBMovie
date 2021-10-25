@@ -31,7 +31,7 @@ extension MovieTableCell: MovieListCell
         
         //Finally, loads the image from url
         if let url = URL(string: "https://www.themoviedb.org/t/p/w1280\(movie.posterPath)") {
-            self.posterImage.load(url: url)
+            self.posterImage.loadFrom(url: url)
         }
     }
 }

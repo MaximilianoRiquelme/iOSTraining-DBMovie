@@ -15,7 +15,7 @@ class DetailView: UIViewController
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet var overview: UILabel!
     
-    var detailedManager: DetailViewModelProtocol?
+    var viewModel: DetailViewModelProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,16 +25,16 @@ class DetailView: UIViewController
 
     func loadModel() {
         DispatchQueue.main.async {
-            self.title = self.detailedManager?.englishTitle
+            self.title = self.viewModel?.englishTitle
             
-            self.originalTitle.text = self.detailedManager?.originalTitle
+            self.originalTitle.text = self.viewModel?.originalTitle
             
-            if let url = self.detailedManager?.posterPath {
-                self.posterImageView.load(url: url)
+            if let url = self.viewModel?.posterPath {
+                self.posterImageView.loadFrom(url: url)
             }
             
-            self.releaseDate.text = self.detailedManager?.releaseDate
-            self.overview.text = self.detailedManager?.overview
+            self.releaseDate.text = self.viewModel?.releaseDate
+            self.overview.text = self.viewModel?.overview
         }
     }
 }

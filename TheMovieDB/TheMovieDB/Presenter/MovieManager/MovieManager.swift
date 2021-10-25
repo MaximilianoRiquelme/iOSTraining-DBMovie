@@ -7,19 +7,9 @@
 
 import Foundation
 
-protocol MovieManagerProtocol
-{
-    var networkingManager: NetworkingManagerProtocol { get }
-    var singleMovie: MovieProtocol? { get }
-    var topRatedMovies: [MovieProtocol]? { get }
-    
-    func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
-    func loadTopRated(completion: @escaping MovieListResult)
-}
-
 class MovieManager: MovieManagerProtocol
 {
-    var networkingManager: NetworkingManagerProtocol
+    private var networkingManager: NetworkingManagerProtocol
     var singleMovie: MovieProtocol?
     var topRatedMovies: [MovieProtocol]? = []
     

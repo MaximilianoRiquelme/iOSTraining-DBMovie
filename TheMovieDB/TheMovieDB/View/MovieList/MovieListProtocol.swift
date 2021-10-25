@@ -34,8 +34,5 @@ protocol MovieListDataSourceProtocol
 
 protocol MovieListDelegateProtocol
 {
-    var movieManager: MovieManagerProtocol { get }
-    var navigationController: UINavigationController? { get }
-    
     func loadDetailView(index: Int)
 }
