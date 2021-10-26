@@ -7,7 +7,6 @@
 
 import Foundation
 
-typealias SingleMovieResult = (Result<MovieProtocol, Error>) -> Void
 typealias MovieListResult = (Result<[MovieProtocol], Error>) -> Void
 
 enum NetworkingError: Error
@@ -19,6 +18,5 @@ enum NetworkingError: Error
 
 protocol NetworkingManagerProtocol
 {
-    func getSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
     func getTopRated(page: Int ,completion: @escaping MovieListResult)
 }

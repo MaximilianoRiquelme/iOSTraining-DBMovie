@@ -9,22 +9,20 @@ import Foundation
 
 class Presenter: PresenterProtocol
 {
-    
-    
     var mainVC: ViewControllerProtocol
     
     var movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager.shared)
     
     private var tableViewList: MovieListProtocol
-    
     private var collectionViewList: MovieListProtocol
     
     init(viewController: ViewControllerProtocol, delegate : MovieListDelegateProtocol) {
         self.mainVC = viewController
         
-        tableViewList = MovieTableView(movieListDelegate: delegate, movieListDataSource: MovieListDataSource(movieManager: movieManager))
+        let dataSource = MovieListDataSource(movieManager: movieManager)
         
-        collectionViewList = MovieCollectionView(movieListDelegate: delegate, movieListDataSource: MovieListDataSource(movieManager: movieManager))
+        tableViewList = MovieTableView(movieListDelegate: delegate, movieListDataSource: dataSource)
+        collectionViewList = MovieCollectionView(movieListDelegate: delegate, movieListDataSource: dataSource)
     }
     
     func getMovieList(type: MovieListType) -> MovieListProtocol {
@@ -46,14 +44,8 @@ class Presenter: PresenterProtocol
         return viewModel
     }
     
-    func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
-        self.movieManager.loadSingleMovie(movieId: movieId) { result in
-            completion(result)
-        }
-    }
-    
-    func loadTopRated(completion: @escaping MovieListResult) {
-        self.movieManager.loadTopRated() { result in
+    func loadTopRated(page: Int, completion: @escaping MovieListResult) {
+        self.movieManager.loadTopRated(page: page) { result in
             completion(result)
         }
     }

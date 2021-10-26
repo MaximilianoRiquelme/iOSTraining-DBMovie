@@ -75,13 +75,7 @@ class MockMovieManager: MovieManagerProtocol
     
     var topRatedMovies: [MovieProtocol]? = [mockMovie]
     
-    func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
-        if let result = singleMovie {
-            completion(.success(result))
-        }
-    }
-    
-    func loadTopRated(completion: @escaping MovieListResult) {
+    func loadTopRated(page: Int, completion: @escaping MovieListResult) {
         if let result = topRatedMovies {
             completion(.success(result))
         }

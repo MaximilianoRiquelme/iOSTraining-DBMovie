@@ -57,7 +57,7 @@ class MainViewController: UIViewController, ViewControllerProtocol
         
         // Asks the MovieManager to load the top rated movies list
         DispatchQueue.global(qos: .userInteractive).async {
-            self.presenter.loadTopRated { result in
+            self.presenter.loadTopRated(page: 1) { result in
                 self.movieList?.reloadData()
             }
         }

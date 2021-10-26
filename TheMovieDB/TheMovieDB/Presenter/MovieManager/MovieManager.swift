@@ -10,32 +10,15 @@ import Foundation
 class MovieManager: MovieManagerProtocol
 {
     private var networkingManager: NetworkingManagerProtocol
-    var singleMovie: MovieProtocol?
+    
     var topRatedMovies: [MovieProtocol]? = []
     
     init(networkingController: NetworkingManagerProtocol) {
         self.networkingManager = networkingController
     }
     
-    func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult) {
-        networkingManager.getSingleMovie(movieId: movieId) {
-            [weak self] (result) in
-                DispatchQueue.main.async {
-                    switch result
-                    {
-                        case .success(let myMovie):
-                            self?.singleMovie = myMovie
-                            completion(result)
-                        case .failure(_):
-                            self?.singleMovie = nil
-                            completion(result)
-                    }
-                }
-        }
-    }
-    
-    func loadTopRated(completion: @escaping MovieListResult) {
-        networkingManager.getTopRated(page: 1) {
+    func loadTopRated(page: Int, completion: @escaping MovieListResult) {
+        networkingManager.getTopRated(page: page) {
             [weak self] (result) in
                 DispatchQueue.main.async {
                     switch result

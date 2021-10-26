@@ -15,8 +15,8 @@ enum MovieListType {
 protocol PresenterProtocol
 {
     func getMovieList(type: MovieListType) -> MovieListProtocol
+    
     func getViewModel(index: Int) -> DetailViewModelProtocol
     
-    func loadSingleMovie(movieId: String, completion: @escaping SingleMovieResult)
-    func loadTopRated(completion: @escaping MovieListResult)
+    func loadTopRated(page: Int, completion: @escaping MovieListResult)
 }
