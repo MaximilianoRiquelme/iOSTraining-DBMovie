@@ -18,7 +18,7 @@ class MovieTableCell: UITableViewCell
     }
 }
 
-extension MovieTableCell: MovieListCell
+extension MovieTableCell: MovieListCellProtocol
 {
     func restoreCell() {
         self.englishTitle.text = "Loading..."

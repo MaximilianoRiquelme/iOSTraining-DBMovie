@@ -53,7 +53,7 @@ extension MovieCollectionView: UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieListDataSource.numberOfItemsInSection(section: section)
+        return movieListDataSource.numberOfMoviesInSection(section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

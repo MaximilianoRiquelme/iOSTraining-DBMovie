@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol MovieListCell
+protocol MovieListCellProtocol
 {
     func restoreCell()
     func updateCell(movie: MovieProtocol)

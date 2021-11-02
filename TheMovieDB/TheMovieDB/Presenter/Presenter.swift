@@ -6,18 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 class Presenter: PresenterProtocol
 {
-    var mainVC: ViewControllerProtocol
-    
     var movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager.shared)
     
     private var tableViewList: MovieListProtocol
     private var collectionViewList: MovieListProtocol
     
-    init(viewController: ViewControllerProtocol, delegate : MovieListDelegateProtocol) {
-        self.mainVC = viewController
+    init(delegate : MovieListDelegateProtocol) {
         
         let dataSource = MovieListDataSource(movieManager: movieManager)
         
@@ -38,7 +36,7 @@ class Presenter: PresenterProtocol
         return movieList
     }
     
-    func getViewModel(index: Int) -> DetailViewModelProtocol {
+    func getDetailViewModel(index: Int) -> DetailViewModelProtocol {
         let viewModel =  DetailViewModel(movie: (movieManager.topRatedMovies?[index])!)
         
         return viewModel

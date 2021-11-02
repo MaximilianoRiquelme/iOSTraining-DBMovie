@@ -19,7 +19,7 @@ class MovieListDataSource: MovieListDataSourceProtocol
         1
     }
     
-    func numberOfItemsInSection(section: Int) -> Int {
+    func numberOfMoviesInSection(section: Int) -> Int {
         return self.movieManager.topRatedMovies?.count ?? Int.zero
     }
     

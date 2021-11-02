@@ -49,7 +49,7 @@ extension MovieTableView: UITableViewDataSource
     //Sets the amount of rows on the table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return movieListDataSource.numberOfItemsInSection(section: section)
+        return movieListDataSource.numberOfMoviesInSection(section: section)
     }
     
     //Loads all cells in order

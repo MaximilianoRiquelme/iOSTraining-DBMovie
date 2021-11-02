@@ -7,15 +7,15 @@
 
 import UIKit
 
-class MainViewController: UIViewController, ViewControllerProtocol
+class MainViewController: UIViewController
 {
     static let nibName = "MainViewController"
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    private lazy var presenter: PresenterProtocol = Presenter(delegate: self)
     
-    var movieList: MovieListProtocol?
+    private var movieList: MovieListProtocol?
     
-    lazy var presenter: PresenterProtocol = Presenter(viewController: self, delegate: self)
+    @IBOutlet private  weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +82,7 @@ extension MainViewController: MovieListDelegateProtocol
     func loadDetailView(index: Int) {
         
         let detailView = DetailView(nibName: "DetailedView", bundle: nil)
-        detailView.viewModel = presenter.getViewModel(index: index)
+        detailView.viewModel = presenter.getDetailViewModel(index: index)
         
         if let navController = self.navigationController
         {

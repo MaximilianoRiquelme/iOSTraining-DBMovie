@@ -16,7 +16,7 @@ protocol PresenterProtocol
 {
     func getMovieList(type: MovieListType) -> MovieListProtocol
     
-    func getViewModel(index: Int) -> DetailViewModelProtocol
+    func getDetailViewModel(index: Int) -> DetailViewModelProtocol
     
     func loadTopRated(page: Int, completion: @escaping MovieListResult)
 }

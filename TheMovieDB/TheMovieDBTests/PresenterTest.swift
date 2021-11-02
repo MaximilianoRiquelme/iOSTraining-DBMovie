@@ -13,19 +13,16 @@ let mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title"
 class PresenterTest: XCTestCase {
     
     private var sut: Presenter!
-    private var mockViewController: ViewControllerProtocol!
     private var mockMovieListDelegate: MovieListDelegateProtocol!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        mockViewController = MockViewController()
         mockMovieListDelegate = MockMovieListDelegate()
-        sut = Presenter(viewController: mockViewController, delegate: mockMovieListDelegate)
+        sut = Presenter(delegate: mockMovieListDelegate)
         sut.movieManager = MockMovieManager()
     }
 
     override func tearDownWithError() throws {
-        mockViewController = nil
         mockMovieListDelegate = nil
         sut = nil
         try super.tearDownWithError()
@@ -42,7 +39,7 @@ class PresenterTest: XCTestCase {
     }
     
     func testLoadDetailView() throws {
-        let viewModel = sut.getViewModel(index: 0)
+        let viewModel = sut.getDetailViewModel(index: 0)
         
         XCTAssertNotNil(sut)
         XCTAssertEqual(viewModel.englishTitle, mockMovie.title)
@@ -53,11 +50,6 @@ class PresenterTest: XCTestCase {
         XCTAssertEqual(viewModel.releaseDate, "Release Date: \(mockMovie.releaseDate)")
         XCTAssertEqual(viewModel.overview, mockMovie.overview)
     }
-}
-
-class MockViewController: ViewControllerProtocol
-{
-    
 }
 
 class MockMovieListDelegate: MovieListDelegateProtocol
