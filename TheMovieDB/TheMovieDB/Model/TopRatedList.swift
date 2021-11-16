@@ -10,12 +10,11 @@
 import Foundation
 
 // MARK: - Top Rated Movie List
-struct TopRatedList: Codable
-{
-    let page: Int
-    let results: [TopRatedMovie]
-    let totalPages: Int
-    let totalResults: Int
+struct TopRatedList: Codable {
+    var page: Int
+    var results: [TopRatedMovie]
+    var totalPages: Int
+    var totalResults: Int
 
     enum CodingKeys: String, CodingKey {
         case page = "page"
@@ -59,19 +58,4 @@ struct TopRatedMovie: MovieProtocol
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-    
-    /*
-    static func ==(lhs: MovieProtocol, rhs: MovieProtocol) -> Bool {
-        if let l = lhs, r = rhs {
-            return l.id == r.id &&
-                    l.title == r.title &&
-                    l.originalTitle == r.originalTitle &&
-                    l.posterPath == r.posterPath &&
-                    l.releaseDate == r.releaseDate &&
-                    l.overview == r.overview
-        }
-        
-        return false
-    }
-     */
 }

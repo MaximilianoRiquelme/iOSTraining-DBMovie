@@ -8,70 +8,64 @@
 import XCTest
 @testable import TheMovieDB
 
-let mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
+let mockMovie = TopRatedMovie(adult: true, backdropPath: "URL", genreIDS:[1], id: 1, originalLanguage: "Language", originalTitle: "Title", overview: "Description", popularity: Double.zero, posterPath: "URL", releaseDate: "Date", title: "Title", video: true, voteAverage: Double.zero, voteCount: 1)
 
 class PresenterTest: XCTestCase {
     
     private var sut: Presenter!
-    private var mockMovieListDelegate: MovieListDelegateProtocol!
+    private var mockMainViewController: MainViewControllerProtocol!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-        mockMovieListDelegate = MockMovieListDelegate()
-        sut = Presenter(delegate: mockMovieListDelegate)
+        mockMainViewController = MockMainViewController()
+        sut = Presenter(mainVC: mockMainViewController)
         sut.movieManager = MockMovieManager()
     }
 
     override func tearDownWithError() throws {
-        mockMovieListDelegate = nil
+        mockMainViewController = nil
         sut = nil
         try super.tearDownWithError()
     }
 
     func testGetMovieList() throws {
-        var movieList: MovieListProtocol
-        
-        movieList = sut.getMovieList(type: .grid)
-        XCTAssertTrue(movieList is MovieCollectionView)
-        
-        movieList = sut.getMovieList(type: .list)
-        XCTAssertTrue(movieList is MovieTableView)
-    }
-    
-    func testLoadDetailView() throws {
-        let viewModel = sut.getDetailViewModel(index: 0)
-        
-        XCTAssertNotNil(sut)
-        XCTAssertEqual(viewModel.englishTitle, mockMovie.title)
-        XCTAssertEqual(viewModel.originalTitle, mockMovie.originalTitle)
-        let expectURL = URL(string: "https://www.themoviedb.org/t/p/w1280\(mockMovie.posterPath)")
-        XCTAssertNotNil(expectURL)
-        XCTAssertEqual(viewModel.posterPath, expectURL)
-        XCTAssertEqual(viewModel.releaseDate, "Release Date: \(mockMovie.releaseDate)")
-        XCTAssertEqual(viewModel.overview, mockMovie.overview)
+        sut.getMovieList(page: 1)
     }
 }
 
-class MockMovieListDelegate: MovieListDelegateProtocol
+class MockMainViewController: MainViewControllerProtocol
 {
-    func loadDetailView(index: Int) {
+    func updateMovieList(viewModel: MovieListViewModelProtocol) {
         
+        let obtainedMovie = viewModel.movies?.first
+        
+        XCTAssertEqual(obtainedMovie?.title, mockMovie.title)
+        XCTAssertEqual(obtainedMovie?.originalTitle, mockMovie.originalTitle)
+        XCTAssertEqual(obtainedMovie?.posterPath, mockMovie.posterPath)
+        XCTAssertEqual(obtainedMovie?.releaseDate, mockMovie.releaseDate)
+        XCTAssertEqual(obtainedMovie?.overview, mockMovie.overview)
     }
 }
 
 class MockMovieManager: MovieManagerProtocol
 {
-    var networkingManager: NetworkingManagerProtocol = MockNetworkingManager()
-    
-    var singleMovie: MovieProtocol? = mockMovie
-    
-    var topRatedMovies: [MovieProtocol]? = [mockMovie]
-    
-    func loadTopRated(page: Int, completion: @escaping MovieListResult) {
-        if let result = topRatedMovies {
-            completion(.success(result))
-        }
+    func loadTopRated(page: Int, completion: @escaping MovieManagerResult) {
+        let topRatedList = TopRatedList(page: 1, results: [mockMovie], totalPages: 1, totalResults: 1)
+        completion(.success(topRatedList))
     }
+}
+
+struct MockMovie: MovieProtocol
+{
+    var id: Int
     
+    var title: String
     
+    var originalTitle: String
+    
+    var posterPath: String
+    
+    var releaseDate: String
+    
+    var overview: String
 }

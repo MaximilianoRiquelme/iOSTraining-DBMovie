@@ -7,16 +7,14 @@
 
 import Foundation
 
-typealias MovieListResult = (Result<[MovieProtocol], Error>) -> Void
+typealias NetworkingResult = (Result<Data, Error>) -> Void
 
 enum NetworkingError: Error
 {
-    case urlError
     case serverError
-    case parsingError
 }
 
 protocol NetworkingManagerProtocol
 {
-    func getTopRated(page: Int ,completion: @escaping MovieListResult)
+    func getData(url: URL ,completion: @escaping NetworkingResult)
 }

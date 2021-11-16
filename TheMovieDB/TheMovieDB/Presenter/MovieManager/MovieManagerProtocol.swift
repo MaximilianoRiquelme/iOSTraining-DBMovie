@@ -7,9 +7,15 @@
 
 import Foundation
 
+typealias MovieManagerResult = (Result<TopRatedList, Error>) -> Void
+
+enum MovieManagerError: Error
+{
+    case urlError
+    case parsingError
+}
+
 protocol MovieManagerProtocol
 {
-    var topRatedMovies: [MovieProtocol]? { get }
-    
-    func loadTopRated(page: Int, completion: @escaping MovieListResult)
+    func loadTopRated(page: Int, completion: @escaping MovieManagerResult)
 }

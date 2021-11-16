@@ -10,41 +10,37 @@ import UIKit
 
 class Presenter: PresenterProtocol
 {
+    var mainVC: MainViewControllerProtocol
     var movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager.shared)
     
-    private var tableViewList: MovieListProtocol
-    private var collectionViewList: MovieListProtocol
-    
-    init(delegate : MovieListDelegateProtocol) {
-        
-        let dataSource = MovieListDataSource(movieManager: movieManager)
-        
-        tableViewList = MovieTableView(movieListDelegate: delegate, movieListDataSource: dataSource)
-        collectionViewList = MovieCollectionView(movieListDelegate: delegate, movieListDataSource: dataSource)
+    init(mainVC: MainViewControllerProtocol) {
+        self.mainVC = mainVC
     }
     
-    func getMovieList(type: MovieListType) -> MovieListProtocol {
-        var movieList: MovieListProtocol
+    func getMovieList(page: Int) {
+        let viewModel = MovieListViewModel()
         
-        switch type {
-        case .grid:
-            movieList = collectionViewList
-        case .list:
-            movieList = tableViewList
+        self.movieManager.loadTopRated(page: page) {
+            (result) in
+                DispatchQueue.main.async {
+                    switch result
+                    {
+                        case .success(let topRatedList):
+                            viewModel.movies = topRatedList.results
+                        case .failure(_):
+                            viewModel.movies = [MovieProtocol]()
+                    }
+                }
         }
         
-        return movieList
+        mainVC.updateMovieList(viewModel: viewModel)
     }
     
+    /*
     func getDetailViewModel(index: Int) -> DetailViewModelProtocol {
         let viewModel =  DetailViewModel(movie: (movieManager.topRatedMovies?[index])!)
         
         return viewModel
     }
-    
-    func loadTopRated(page: Int, completion: @escaping MovieListResult) {
-        self.movieManager.loadTopRated(page: page) { result in
-            completion(result)
-        }
-    }
+     */
 }

@@ -9,10 +9,10 @@ import Foundation
 
 class MovieListDataSource: MovieListDataSourceProtocol
 {
-    var movieManager: MovieManagerProtocol
+    var movies: [MovieProtocol]?
     
-    init (movieManager: MovieManagerProtocol) {
-        self.movieManager = movieManager
+    required init(viewModel: MovieListViewModelProtocol) {
+        movies = viewModel.movies ?? [MovieProtocol]()
     }
     
     func numberOfSections() -> Int {
@@ -20,12 +20,12 @@ class MovieListDataSource: MovieListDataSourceProtocol
     }
     
     func numberOfMoviesInSection(section: Int) -> Int {
-        return self.movieManager.topRatedMovies?.count ?? Int.zero
+        return self.movies?.count ?? Int.zero
     }
     
-    func cellForItemAt(indexPath: IndexPath) throws -> MovieProtocol {
+    func movieForItemAt(index: Int) throws -> MovieProtocol {
         //Change the cell with the proper information
-        guard let movie = movieManager.topRatedMovies?[indexPath.row]
+        guard let movie = movies?[index]
         else {
             throw MovieListError.CellNotFound
         }

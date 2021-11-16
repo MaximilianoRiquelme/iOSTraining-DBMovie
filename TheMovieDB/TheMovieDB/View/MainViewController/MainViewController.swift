@@ -7,13 +7,15 @@
 
 import UIKit
 
-class MainViewController: UIViewController
+class MainViewController: UIViewController, MainViewControllerProtocol
 {
+    
+    
     static let nibName = "MainViewController"
     
-    private lazy var presenter: PresenterProtocol = Presenter(delegate: self)
+    private lazy var presenter: PresenterProtocol = Presenter(mainVC: self)
     
-    private var movieList: MovieListProtocol?
+    private var movieList: MovieListViewProtocol?
     
     @IBOutlet private  weak var segmentedControl: UISegmentedControl!
     
@@ -23,7 +25,16 @@ class MainViewController: UIViewController
         self.title = "Top Rated Movies"
         
         //Create the movieList
-        movieList = presenter.getMovieList(type: .list)
+        presenter.getMovieList(page: 1)
+    }
+    
+    func updateMovieList(viewModel: MovieListViewModelProtocol) {
+        
+        if let view = movieList?.view {
+            view.removeFromSuperview()
+        }
+        
+        //TO-DO!!!
         
         //Add the MovieList
         if let view = movieList?.view {
@@ -32,21 +43,13 @@ class MainViewController: UIViewController
     }
     
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
-        if let view = movieList?.view {
-            view.removeFromSuperview()
-        }
-        
         let index = sender.selectedSegmentIndex
         
         if index == 0 {
-            movieList = presenter.getMovieList(type: .list)
+            presenter.getMovieList(page: 1)
         }
         else if index == 1 {
-            movieList = presenter.getMovieList(type: .grid)
-        }
-        
-        if let view = movieList?.view {
-            addMovieListView(movieListView: view)
+            presenter.getMovieList(page: 1)
         }
     }
     
@@ -55,12 +58,7 @@ class MainViewController: UIViewController
         view.addSubview(movieListView)
         applyConstraintsTo(superView: view, subView: movieListView)
         
-        // Asks the MovieManager to load the top rated movies list
-        DispatchQueue.global(qos: .userInteractive).async {
-            self.presenter.loadTopRated(page: 1) { result in
-                self.movieList?.reloadData()
-            }
-        }
+        self.movieList?.reloadData()
     }
     
     private func applyConstraintsTo(superView: UIView, subView: UIView) {
@@ -82,11 +80,14 @@ extension MainViewController: MovieListDelegateProtocol
     func loadDetailView(index: Int) {
         
         let detailView = DetailView(nibName: "DetailedView", bundle: nil)
-        detailView.viewModel = presenter.getDetailViewModel(index: index)
         
-        if let navController = self.navigationController
-        {
-            navController.pushViewController(detailView, animated: true)
+        if let movie = movieList?.getMovieAt(index: index) {
+            detailView.viewModel = DetailViewModel(movie: movie)
+            
+            if let navController = self.navigationController
+            {
+                navController.pushViewController(detailView, animated: true)
+            }
         }
     }
 }

@@ -7,16 +7,9 @@
 
 import Foundation
 
-enum MovieListType {
-    case list
-    case grid
-}
-
 protocol PresenterProtocol
 {
-    func getMovieList(type: MovieListType) -> MovieListProtocol
+    var mainVC: MainViewControllerProtocol { get }
     
-    func getDetailViewModel(index: Int) -> DetailViewModelProtocol
-    
-    func loadTopRated(page: Int, completion: @escaping MovieListResult)
+    func getMovieList(page: Int)
 }

@@ -29,20 +29,18 @@ class MovieManagerTests: XCTestCase {
         let expectation = self.expectation(description: "Expectation")
         
         mockNetworkingManager.success =  true
-        mockNetworkingManager.mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
         
         sut.loadTopRated(page: 1) { result in
             switch result {
-            case .success(let myMovies):
-                XCTAssertNotNil(myMovies)
-                XCTAssertEqual(myMovies[0].id, self.mockNetworkingManager.mockMovie?.id)
+            case .success(let topRatedList):
+                XCTAssertNotNil(topRatedList)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }
             expectation.fulfill()
         }
         
-        self.waitForExpectations(timeout: 0.2, handler: nil)
+        self.waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testLoadTopRatedFailure() {
@@ -67,33 +65,15 @@ class MovieManagerTests: XCTestCase {
 class MockNetworkingManager: NetworkingManagerProtocol {
     
     var success = true
-    var mockMovie: MovieProtocol?
     
-    func getTopRated(page: Int, completion: @escaping MovieListResult) {
+    func getData(url: URL, completion: @escaping NetworkingResult) {
         if success {
-            if let movie = mockMovie {
-                let movieArray = Array.init(arrayLiteral: movie)
-                completion(.success(movieArray))
-            }
-            
-        } else {
+            completion(.success(Data()))
+        }
+        else {
             completion(.failure(MockError()))
         }
     }
-}
-
-struct MockMovie: MovieProtocol {
-    var id: Int
-    
-    var title: String
-    
-    var originalTitle: String
-    
-    var posterPath: String
-    
-    var releaseDate: String
-    
-    var overview: String
 }
 
 struct MockError: Error {

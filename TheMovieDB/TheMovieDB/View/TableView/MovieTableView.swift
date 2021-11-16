@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MovieTableView: UITableView, MovieListProtocol
+class MovieTableView: UITableView, MovieListViewProtocol
 {
     private let cellIdentifier: String = "MovieTableCell"
     
@@ -16,8 +16,8 @@ class MovieTableView: UITableView, MovieListProtocol
     var movieListDataSource: MovieListDataSourceProtocol
     var movieListDelegate: MovieListDelegateProtocol
     
-    required init(movieListDelegate: MovieListDelegateProtocol, movieListDataSource: MovieListDataSourceProtocol) {
-        self.movieListDataSource = movieListDataSource
+    required init(movieListDelegate: MovieListDelegateProtocol, viewModel: MovieListViewModelProtocol) {
+        self.movieListDataSource = MovieListDataSource(viewModel: viewModel)
         self.movieListDelegate = movieListDelegate
         
         super.init(frame: .zero, style: .plain)
@@ -40,6 +40,14 @@ class MovieTableView: UITableView, MovieListProtocol
     
     override func reloadData() {
         super.reloadData()
+    }
+    
+    func getMovieAt(index: Int) -> MovieProtocol? {
+        do {
+            return try movieListDataSource.movieForItemAt(index: index)
+        } catch {
+            return nil
+        }
     }
 }
 
@@ -66,7 +74,7 @@ extension MovieTableView: UITableViewDataSource
         var movieData: MovieProtocol
         
         do {
-            try movieData = (movieListDataSource.cellForItemAt(indexPath: indexPath))
+            try movieData = (movieListDataSource.movieForItemAt(index: indexPath.row))
         } catch {
             return MovieTableCell()
         }
