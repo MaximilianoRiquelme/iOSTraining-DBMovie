@@ -9,8 +9,6 @@ import UIKit
 
 class MainViewController: UIViewController, MainViewControllerProtocol
 {
-    
-    
     static let nibName = "MainViewController"
     
     private lazy var presenter: PresenterProtocol = Presenter(mainVC: self)
@@ -29,17 +27,21 @@ class MainViewController: UIViewController, MainViewControllerProtocol
     }
     
     func updateMovieList(viewModel: MovieListViewModelProtocol) {
-        
-        if let view = movieList?.view {
-            view.removeFromSuperview()
+        if segmentedControl.selectedSegmentIndex == 0 {
+            movieList = MovieTableView(movieListDelegate: self, viewModel: viewModel)
+        }
+        else {
+            movieList = MovieCollectionView(movieListDelegate: self, viewModel: viewModel)
         }
         
-        //TO-DO!!!
-        
-        //Add the MovieList
-        if let view = movieList?.view {
-            addMovieListView(movieListView: view)
+        if let movieListView = movieList?.view {
+            view.addSubview(movieListView)
+            applyConstraintsTo(superView: view, subView: movieListView)
+            
+            self.movieList?.reloadData()
         }
+        
+        
     }
     
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
@@ -51,14 +53,6 @@ class MainViewController: UIViewController, MainViewControllerProtocol
         else if index == 1 {
             presenter.getMovieList(page: 1)
         }
-    }
-    
-    private func addMovieListView(movieListView: UIView)
-    {
-        view.addSubview(movieListView)
-        applyConstraintsTo(superView: view, subView: movieListView)
-        
-        self.movieList?.reloadData()
     }
     
     private func applyConstraintsTo(superView: UIView, subView: UIView) {

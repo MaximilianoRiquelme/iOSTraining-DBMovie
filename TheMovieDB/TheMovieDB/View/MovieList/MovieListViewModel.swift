@@ -10,4 +10,8 @@ import Foundation
 class MovieListViewModel: MovieListViewModelProtocol
 {
     var movies: [MovieProtocol]?
+     
+    init(movies: [MovieProtocol]) {
+        self.movies = movies
+    }
 }

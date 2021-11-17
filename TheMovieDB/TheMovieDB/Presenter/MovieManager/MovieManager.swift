@@ -33,8 +33,8 @@ class MovieManager: MovieManagerProtocol
                             let myMovies = try JSONDecoder().decode(TopRatedList.self, from: data)
                                 completion(.success(myMovies))
                         }
-                    catch {
-                            completion(.failure(MovieManagerError.parsingError))
+                        catch {
+                                completion(.failure(MovieManagerError.parsingError))
                         }
                     case .failure(_):
                         completion(.failure(NetworkingError.serverError))

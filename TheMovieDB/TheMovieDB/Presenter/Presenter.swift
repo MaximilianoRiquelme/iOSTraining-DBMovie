@@ -18,22 +18,19 @@ class Presenter: PresenterProtocol
     }
     
     func getMovieList(page: Int) {
-        let viewModel = MovieListViewModel()
-        
-        self.movieManager.loadTopRated(page: page) {
-            (result) in
-                DispatchQueue.main.async {
-                    switch result
-                    {
-                        case .success(let topRatedList):
-                            viewModel.movies = topRatedList.results
-                        case .failure(_):
-                            viewModel.movies = [MovieProtocol]()
-                    }
+        self.movieManager.loadTopRated(page: page) { (result) in
+            DispatchQueue.main.async {
+                switch result
+                {
+                    case .success(let topRatedList):
+                        let viewModel = MovieListViewModel(movies: topRatedList.results)
+                        self.mainVC.updateMovieList(viewModel: viewModel)
+                    case .failure(_):
+                        let viewModel = MovieListViewModel(movies: [MovieProtocol]())
+                        self.mainVC.updateMovieList(viewModel: viewModel)
                 }
+            }
         }
-        
-        mainVC.updateMovieList(viewModel: viewModel)
     }
     
     /*
