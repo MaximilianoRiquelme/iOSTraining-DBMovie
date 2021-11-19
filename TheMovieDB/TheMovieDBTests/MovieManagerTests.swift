@@ -31,16 +31,18 @@ class MovieManagerTests: XCTestCase {
         mockNetworkingManager.success =  true
         
         sut.loadTopRated(page: 1) { result in
-            switch result {
-            case .success(let topRatedList):
-                XCTAssertNotNil(topRatedList)
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let topRatedList):
+                    XCTAssertNotNil(topRatedList)
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                }
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         
-        self.waitForExpectations(timeout: 1, handler: nil)
+        self.waitForExpectations(timeout: 0.5, handler: nil)
     }
     
     func testLoadTopRatedFailure() {

@@ -32,12 +32,4 @@ class Presenter: PresenterProtocol
             }
         }
     }
-    
-    /*
-    func getDetailViewModel(index: Int) -> DetailViewModelProtocol {
-        let viewModel =  DetailViewModel(movie: (movieManager.topRatedMovies?[index])!)
-        
-        return viewModel
-    }
-     */
 }
