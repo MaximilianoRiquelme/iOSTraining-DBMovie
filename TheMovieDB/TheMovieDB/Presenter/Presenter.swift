@@ -11,7 +11,7 @@ import UIKit
 class Presenter: PresenterProtocol
 {
     var mainVC: MainViewControllerProtocol
-    var movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager.shared)
+    var movieManager: MovieManagerProtocol = MovieManager(networkingController: NetworkingManager())
     
     init(mainVC: MainViewControllerProtocol) {
         self.mainVC = mainVC

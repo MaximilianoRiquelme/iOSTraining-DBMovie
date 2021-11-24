@@ -8,8 +8,8 @@
 import XCTest
 @testable import TheMovieDB
 
-class MovieListViewModelTests: XCTestCase {
-
+class MovieListViewModelTests: XCTestCase
+{
     func testDetailViewModelInit() {
         let mockMovie = MockMovie(id: 1, title: "Title", originalTitle: "Original Title", posterPath: "URL", releaseDate: "Date", overview: "Description")
         

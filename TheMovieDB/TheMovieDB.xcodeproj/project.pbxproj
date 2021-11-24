@@ -48,6 +48,8 @@
 		E2DA5D602720664D00FE4DCA /* PresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA5D5F2720664D00FE4DCA /* PresenterProtocol.swift */; };
 		E2DA5D622720728300FE4DCA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA5D612720728300FE4DCA /* Presenter.swift */; };
 		E2DA5D642720743C00FE4DCA /* NetworkingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA5D632720743C00FE4DCA /* NetworkingProtocol.swift */; };
+		E2E78AF6274ED6880004C373 /* top_rated.json in Resources */ = {isa = PBXBuildFile; fileRef = E2E78AF5274ED6870004C373 /* top_rated.json */; };
+		E2E78AF7274EDBAD0004C373 /* top_rated.json in Resources */ = {isa = PBXBuildFile; fileRef = E2E78AF5274ED6870004C373 /* top_rated.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +108,7 @@
 		E2DA5D5F2720664D00FE4DCA /* PresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProtocol.swift; sourceTree = "<group>"; };
 		E2DA5D612720728300FE4DCA /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		E2DA5D632720743C00FE4DCA /* NetworkingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingProtocol.swift; sourceTree = "<group>"; };
+		E2E78AF5274ED6870004C373 /* top_rated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = top_rated.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +166,7 @@
 		02BCD44026B81F04003F3144 /* TheMovieDBTests */ = {
 			isa = PBXGroup;
 			children = (
+				E2E78AEE274E7EA20004C373 /* JsonMock */,
 				E25ED2382721BACB00EBD308 /* PresenterTest.swift */,
 				02BCD44126B81F04003F3144 /* MovieManagerTests.swift */,
 				E2AF2C162746D6E5008C4A98 /* MovieListViewModelTests.swift */,
@@ -285,6 +289,14 @@
 			path = NetworkingManager;
 			sourceTree = "<group>";
 		};
+		E2E78AEE274E7EA20004C373 /* JsonMock */ = {
+			isa = PBXGroup;
+			children = (
+				E2E78AF5274ED6870004C373 /* top_rated.json */,
+			);
+			path = JsonMock;
+			sourceTree = "<group>";
+		};
 		E2FFA02526FCB65B007FF261 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +397,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2E78AF7274EDBAD0004C373 /* top_rated.json in Resources */,
 				02BCD43726B81F03003F3144 /* LaunchScreen.storyboard in Resources */,
 				02BCD43426B81F03003F3144 /* Assets.xcassets in Resources */,
 				E2914917270757C1008F6553 /* MainViewController.xib in Resources */,
@@ -398,6 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2E78AF6274ED6880004C373 /* top_rated.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

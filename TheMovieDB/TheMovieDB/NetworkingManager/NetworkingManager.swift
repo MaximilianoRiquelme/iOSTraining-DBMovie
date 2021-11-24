@@ -9,12 +9,6 @@ import Foundation
 
 class NetworkingManager: NetworkingManagerProtocol
 {
-    static let shared = NetworkingManager()
-    
-    private init() {
-        
-    }
-    
     func getData(url: URL, completion: @escaping NetworkingResult) {
         //Starts a DataTask
         let myDataTask = URLSession.shared.dataTask(with: url) {

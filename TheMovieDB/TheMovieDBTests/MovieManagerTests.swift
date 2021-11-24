@@ -28,8 +28,6 @@ class MovieManagerTests: XCTestCase {
     func testLoadTopRatedSuccess() {
         let expectation = self.expectation(description: "Expectation")
         
-        mockNetworkingManager.success =  true
-        
         sut.loadTopRated(page: 1) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -42,7 +40,7 @@ class MovieManagerTests: XCTestCase {
             }
         }
         
-        self.waitForExpectations(timeout: 0.5, handler: nil)
+        self.waitForExpectations(timeout: 60, handler: nil)
     }
     
     func testLoadTopRatedFailure() {
@@ -51,26 +49,42 @@ class MovieManagerTests: XCTestCase {
         mockNetworkingManager.success = false
         
         sut.loadTopRated(page: 1) { result in
-            switch result {
-            case .success(_):
-                XCTFail("Expected failure instead.")
-            case .failure(let error):
-                XCTAssertNotNil(error)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    XCTFail("Expected failure instead.")
+                case .failure(let error):
+                    XCTAssertNotNil(error)
+                }
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         
-        self.waitForExpectations(timeout: 0.2, handler: nil)
+        self.waitForExpectations(timeout: 60, handler: nil)
     }
 }
 
 class MockNetworkingManager: NetworkingManagerProtocol {
     
     var success = true
+    var jsonName: String?
     
     func getData(url: URL, completion: @escaping NetworkingResult) {
-        if success {
-            completion(.success(Data()))
+        if self.success {
+            DispatchQueue.global(qos: .background).async {
+                if let filePath = Bundle.main.url(forResource: "top_rated", withExtension: "json") {
+                        do {
+                        //let fileUrl = URL(fileURLWithPath: filePath)
+                        let data = try Data(contentsOf: filePath)
+                        completion(.success(data))
+                        } catch {
+                            completion(.failure(NetworkingError.serverError))
+                        }
+                }
+                else {
+                    completion(.failure(NetworkingError.serverError))
+                }
+            }
         }
         else {
             completion(.failure(MockError()))
