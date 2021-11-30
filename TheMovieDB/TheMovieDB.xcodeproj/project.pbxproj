@@ -94,7 +94,7 @@
 		E28CB3E226E66BD9000CD1CA /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewModel.swift; path = ../../Model/DetailViewModel.swift; sourceTree = "<group>"; };
 		E28CB3E426E6A772000CD1CA /* TopRatedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedList.swift; sourceTree = "<group>"; };
 		E2914914270757C1008F6553 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		E2914915270757C1008F6553 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		E2914915270757C1008F6553 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainViewController.xib; path = ../MovieList/Protocols/MainViewController.xib; sourceTree = "<group>"; };
 		E291491927075C6D008F6553 /* MovieTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableView.swift; sourceTree = "<group>"; };
 		E2A841D82704F93A00706A57 /* MovieCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionView.swift; sourceTree = "<group>"; };
 		E2AF2C162746D6E5008C4A98 /* MovieListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModelTests.swift; sourceTree = "<group>"; };
@@ -252,8 +252,9 @@
 		E2A841D32704D8EC00706A57 /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E2914914270757C1008F6553 /* MainViewController.swift */,
 				E2B95F3027342B5B00F27E79 /* MainViewControllerProtocol.swift */,
+				E2914914270757C1008F6553 /* MainViewController.swift */,
+				E2914915270757C1008F6553 /* MainViewController.xib */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -261,7 +262,6 @@
 		E2B218B127330EC000ED367D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E2914915270757C1008F6553 /* MainViewController.xib */,
 				E21BECD826FE1FCA0079F2FE /* MovieListViewProtocol.swift */,
 				E2B218AB27330CE700ED367D /* MovieListDelegateProtocol.swift */,
 				E2B218A927330CA900ED367D /* MovieListDataSourceProtocol.swift */,

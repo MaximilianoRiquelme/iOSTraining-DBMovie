@@ -12,7 +12,7 @@ class MovieCollectionView: UICollectionView, MovieListViewProtocol
 {
     private let cellIdentifier: String = "MovieCollectionCell"
     
-    var view: UIView?
+    weak var view: UIView?
     var movieListDataSource: MovieListDataSourceProtocol
     var movieListDelegate: MovieListDelegateProtocol
     

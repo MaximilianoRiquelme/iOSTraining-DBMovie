@@ -20,7 +20,7 @@ protocol MovieListViewProtocol
 {
     var movieListDataSource: MovieListDataSourceProtocol { get }
     var movieListDelegate: MovieListDelegateProtocol { get }
-    var view: UIView? { get }
+    var view: UIView? { get set }
     
     init(movieListDelegate: MovieListDelegateProtocol, viewModel: MovieListViewModelProtocol)
     

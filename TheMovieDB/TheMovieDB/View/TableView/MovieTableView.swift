@@ -12,7 +12,7 @@ class MovieTableView: UITableView, MovieListViewProtocol
 {
     private let cellIdentifier: String = "MovieTableCell"
     
-    var view: UIView?
+    weak var view: UIView?
     var movieListDataSource: MovieListDataSourceProtocol
     var movieListDelegate: MovieListDelegateProtocol
     

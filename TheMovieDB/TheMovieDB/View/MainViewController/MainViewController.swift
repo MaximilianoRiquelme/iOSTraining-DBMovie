@@ -15,7 +15,7 @@ class MainViewController: UIViewController, MainViewControllerProtocol
     
     private var movieList: MovieListViewProtocol?
     
-    @IBOutlet private  weak var segmentedControl: UISegmentedControl!
+    @IBOutlet var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class MainViewController: UIViewController, MainViewControllerProtocol
         
     }
     
-    @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
+    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
         
         if index == 0 {
