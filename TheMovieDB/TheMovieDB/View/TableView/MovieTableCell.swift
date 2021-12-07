@@ -11,10 +11,13 @@ class MovieTableCell: UITableViewCell
 {
     @IBOutlet var englishTitle: UILabel!
     @IBOutlet var posterImage: UIImageView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
     }
 }
 
@@ -31,7 +34,9 @@ extension MovieTableCell: MovieListCellProtocol
         
         //Finally, loads the image from url
         if let url = URL(string: "https://www.themoviedb.org/t/p/w1280\(movie.posterPath)") {
-            self.posterImage.loadFrom(url: url)
+            self.posterImage.loadFrom(url: url) {
+                self.activityIndicator.stopAnimating()
+            }
         }
     }
 }

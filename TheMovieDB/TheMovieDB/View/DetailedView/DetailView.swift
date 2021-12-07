@@ -30,7 +30,9 @@ class DetailView: UIViewController
             self.originalTitle.text = self.viewModel?.originalTitle
             
             if let url = self.viewModel?.posterPath {
-                self.posterImageView.loadFrom(url: url)
+                self.posterImageView.loadFrom(url: url) {
+                    return
+                }
             }
             
             self.releaseDate.text = self.viewModel?.releaseDate

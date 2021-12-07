@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewController" customModule="TheMovieDB" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="PGP-EH-AMD" id="n2E-nU-KyX"/>
                 <outlet property="segmentedControl" destination="EER-xZ-pNR" id="asY-L6-mNP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -32,15 +33,22 @@
                         <action selector="segmentedControlChanged:" destination="-1" eventType="valueChanged" id="Pal-4C-RFZ"/>
                     </connections>
                 </segmentedControl>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="PGP-EH-AMD">
+                    <rect key="frame" x="197" y="443" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <color key="tintColor" name="AccentColor"/>
             <constraints>
                 <constraint firstItem="EER-xZ-pNR" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="0zW-Gd-4Lf"/>
+                <constraint firstItem="PGP-EH-AMD" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="J7j-6X-EC0"/>
+                <constraint firstItem="PGP-EH-AMD" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" multiplier="0.0483092" id="JTw-Xb-fzm"/>
                 <constraint firstItem="EER-xZ-pNR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="P3S-mZ-7hn"/>
+                <constraint firstItem="PGP-EH-AMD" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XG5-Vt-R69"/>
                 <constraint firstItem="EER-xZ-pNR" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="g1S-lw-8tQ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="EER-xZ-pNR" secondAttribute="trailing" constant="15" id="jdJ-nF-Ih3"/>
+                <constraint firstItem="PGP-EH-AMD" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.0244499" id="jrV-Pp-FjN"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="80.357142857142847"/>
         </view>

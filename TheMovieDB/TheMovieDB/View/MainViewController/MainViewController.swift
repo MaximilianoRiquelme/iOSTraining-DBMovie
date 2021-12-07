@@ -16,11 +16,14 @@ class MainViewController: UIViewController, MainViewControllerProtocol
     private var movieList: MovieListViewProtocol?
     
     @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.title = "Top Rated Movies"
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.hidesWhenStopped = true
         
         //Create the movieList
         presenter.getMovieList(page: 1)
@@ -41,7 +44,7 @@ class MainViewController: UIViewController, MainViewControllerProtocol
             self.movieList?.reloadData()
         }
         
-        
+        self.activityIndicator.stopAnimating()
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
