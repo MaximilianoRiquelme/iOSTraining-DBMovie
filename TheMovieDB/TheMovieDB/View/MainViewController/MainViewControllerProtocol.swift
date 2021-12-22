@@ -11,4 +11,6 @@ import UIKit
 protocol MainViewControllerProtocol
 {
     func updateMovieList(viewModel: MovieListViewModelProtocol)
+    
+    func showErrorMessage(message: String)
 }

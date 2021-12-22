@@ -14,12 +14,15 @@ class DetailView: UIViewController
     @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var releaseDate: UILabel!
     @IBOutlet var overview: UILabel!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var viewModel: DetailViewModelProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
         loadModel()
     }
 
@@ -31,7 +34,7 @@ class DetailView: UIViewController
             
             if let url = self.viewModel?.posterPath {
                 self.posterImageView.loadFrom(url: url) {
-                    return
+                    self.activityIndicator.stopAnimating()
                 }
             }
             

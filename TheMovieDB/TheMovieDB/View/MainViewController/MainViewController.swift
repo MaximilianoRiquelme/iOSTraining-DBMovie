@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, MainViewControllerProtocol
+class MainViewController: UIViewController
 {
     static let nibName = "MainViewController"
     
@@ -27,24 +27,6 @@ class MainViewController: UIViewController, MainViewControllerProtocol
         
         //Create the movieList
         presenter.getMovieList(page: 1)
-    }
-    
-    func updateMovieList(viewModel: MovieListViewModelProtocol) {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            movieList = MovieTableView(movieListDelegate: self, viewModel: viewModel)
-        }
-        else {
-            movieList = MovieCollectionView(movieListDelegate: self, viewModel: viewModel)
-        }
-        
-        if let movieListView = movieList?.view {
-            view.addSubview(movieListView)
-            applyConstraintsTo(superView: view, subView: movieListView)
-            
-            self.movieList?.reloadData()
-        }
-        
-        self.activityIndicator.stopAnimating()
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
@@ -69,6 +51,34 @@ class MainViewController: UIViewController, MainViewControllerProtocol
         constraints.append(subView.bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.bottomAnchor))
         
         NSLayoutConstraint.activate(constraints)
+    }
+}
+
+extension MainViewController: MainViewControllerProtocol
+{
+    func updateMovieList(viewModel: MovieListViewModelProtocol) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            movieList = MovieTableView(movieListDelegate: self, viewModel: viewModel)
+        }
+        else {
+            movieList = MovieCollectionView(movieListDelegate: self, viewModel: viewModel)
+        }
+        
+        if let movieListView = movieList?.view {
+            view.addSubview(movieListView)
+            applyConstraintsTo(superView: view, subView: movieListView)
+            
+            self.movieList?.reloadData()
+        }
+        
+        self.activityIndicator.stopAnimating()
+    }
+    
+    func showErrorMessage(message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true)
     }
 }
 

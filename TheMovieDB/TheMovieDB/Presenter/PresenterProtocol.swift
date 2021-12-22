@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum PresenterError: Error
+{
+    case urlError
+    case parsingError
+}
+
 protocol PresenterProtocol
 {
     var mainVC: MainViewControllerProtocol { get }

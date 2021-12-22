@@ -35,6 +35,10 @@ class PresenterTest: XCTestCase {
 
 class MockMainViewController: MainViewControllerProtocol
 {
+    func showErrorMessage(message: String) {
+        return
+    }
+    
     func updateMovieList(viewModel: MovieListViewModelProtocol) {
         
         let obtainedMovie = viewModel.movies?.first
@@ -47,9 +51,9 @@ class MockMainViewController: MainViewControllerProtocol
     }
 }
 
-class MockMovieManager: MovieManagerProtocol
+class MockMovieManager: APIClientProtocol
 {
-    func loadTopRated(page: Int, completion: @escaping MovieManagerResult) {
+    func loadTopRated(page: Int, completion: @escaping APIClientResult) {
         let topRatedList = TopRatedList(page: 1, results: [mockMovie], totalPages: 1, totalResults: 1)
         completion(.success(topRatedList))
     }
